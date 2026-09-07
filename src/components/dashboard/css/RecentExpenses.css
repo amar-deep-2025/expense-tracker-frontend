@@ -1,0 +1,83 @@
+.recent-expenses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recent-expense-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 18px;
+  background: #ffffff;
+  border: 1px solid #e8eaf0;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.recent-expense-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 20px rgba(15, 23, 42, 0.07);
+}
+
+.recent-expense-info {
+  min-width: 0;
+}
+
+.recent-expense-info h3 {
+  margin: 0 0 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.recent-expense-info span {
+  font-size: 12px;
+  color: #9ca3af;
+  text-transform: capitalize;
+}
+
+.recent-expense-details {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.recent-expense-amount {
+  font-size: 14px;
+  font-weight: 700;
+  color: #dc2626;
+}
+
+.recent-expense-type {
+  font-size: 11px;
+  color: #9ca3af;
+  text-transform: capitalize;
+}
+
+.recent-expenses-empty {
+  padding: 24px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e8eaf0;
+  border-radius: 14px;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .recent-expense-item {
+    align-items: flex-start;
+    padding: 14px;
+  }
+
+  .recent-expense-details {
+    align-items: flex-end;
+  }
+}

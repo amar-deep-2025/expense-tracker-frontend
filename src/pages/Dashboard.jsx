@@ -2,7 +2,10 @@ import useDashboard from "../hooks/useDashboard";
 import formatCurrency from "../utils/formatCurrency";
 import SummaryCard from "../components/dashboard/SummaryCard";
 import { Wallet, ArrowDown, PieChart, Clock3, Scale } from "lucide-react";
-import "./Dashboard.css";
+import "./css/Dashboard.css";
+import CategorySummary from "../components/dashboard/CategorySummary";
+import RecentExpenses from "../components/dashboard/RecentExpenses";
+import AIInsight from "../components/dashboard/AIinsight";
 
 const Dashboard = () => {
   const { data, loading, error, refetch } = useDashboard();
@@ -26,13 +29,18 @@ const Dashboard = () => {
   if (!data) {
     return <div>No dashboard data available.</div>;
   }
-
+  console.log("Dashboard Data:" + data);
+  console.log("Recent Expenses: " + data.recentExpenses);
   return (
     <main className="Dashboard">
       <section className="dashboard-header">
-        <div>
-          <h1>Good Morning! 👋</h1>
-          <p>Here's your financial overview for the selected period.</p>
+        <div className="dashboard-header-content">
+          <div className="dashboard-welcome">
+            <h1>Good Morning! 👋</h1>
+            <p>Here's your financial overview for the selected period.</p>
+          </div>
+
+          <AIInsight aiInsight={data.aiInsight} />
         </div>
       </section>
       {/* Financial Summary */}
@@ -78,6 +86,22 @@ const Dashboard = () => {
             subtitle={`Today: ${formatCurrency(data.todayExpense)}`}
           />
         </div>
+      </section>
+      <section className="dashboard-section">
+        <h4>Category Summary</h4>
+
+        <CategorySummary
+          categorySummary={data.categorySummary}
+          formatCurrency={formatCurrency}
+        />
+      </section>
+
+      <section className="dashboard-section">
+        <h4>Recent Expenses</h4>
+        <RecentExpenses
+          expenses={data.recentExpenses}
+          formatCurrency={formatCurrency}
+        />
       </section>
     </main>
   );

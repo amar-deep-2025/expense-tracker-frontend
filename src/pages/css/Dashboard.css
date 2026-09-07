@@ -136,3 +136,20 @@
 .summary-card-balance.negative .summary-card-value {
   color: #dc2626;
 }
+.dashboard-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.dashboard-welcome {
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .dashboard-header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
