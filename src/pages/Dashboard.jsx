@@ -1,4 +1,8 @@
 import useDashboard from "../hooks/useDashboard";
+import formatCurrency from "../utils/formatCurrency";
+import SummaryCard from "../components/dashboard/SummaryCard";
+import { Wallet, ArrowDown, PieChart, Clock3, Scale } from "lucide-react";
+import "./Dashboard.css";
 
 const Dashboard = () => {
   const { data, loading, error, refetch } = useDashboard();
@@ -24,87 +28,56 @@ const Dashboard = () => {
   }
 
   return (
-    <main>
-      <h1>Dashboard</h1>
-
+    <main className="Dashboard">
+      <section className="dashboard-header">
+        <div>
+          <h1>Good Morning! 👋</h1>
+          <p>Here's your financial overview for the selected period.</p>
+        </div>
+      </section>
       {/* Financial Summary */}
-      <section>
-        <h2>Financial Summary</h2>
+      <section className="dashboard-section">
+        <div className="summary-cards">
+          <SummaryCard
+            title="Total Income"
+            value={formatCurrency(data.totalIncome)}
+            icon={Wallet}
+            variant="income"
+            subtitle="Total income"
+          />
 
-        <div>
-          <p>Total Income</p>
-          <p>{data.totalIncome}</p>
+          <SummaryCard
+            title="Total Expense"
+            value={formatCurrency(data.totalExpense)}
+            icon={ArrowDown}
+            variant="expense"
+            subtitle={`This month: ${formatCurrency(data.monthlyExpense)}`}
+          />
+
+          <SummaryCard
+            title="Total Budget"
+            value={formatCurrency(data.totalBudget)}
+            icon={PieChart}
+            variant="budget"
+            subtitle="Overall budget"
+          />
+
+          <SummaryCard
+            title="Remaining Budget"
+            value={formatCurrency(data.budgetRemaining)}
+            icon={Clock3}
+            variant="remaining"
+            subtitle="Available budget"
+          />
+
+          <SummaryCard
+            title="Current Balance"
+            value={formatCurrency(data.balance)}
+            icon={Scale}
+            variant={data.balance < 0 ? "balance negative" : "balance"}
+            subtitle={`Today: ${formatCurrency(data.todayExpense)}`}
+          />
         </div>
-
-        <div>
-          <p>Total Expense</p>
-          <p>{data.totalExpense}</p>
-        </div>
-
-        <div>
-          <p>Balance</p>
-          <p>{data.balance}</p>
-        </div>
-
-        <div>
-          <p>Total Budget</p>
-          <p>{data.totalBudget}</p>
-        </div>
-
-        <div>
-          <p>Budget Remaining</p>
-          <p>{data.budgetRemaining}</p>
-        </div>
-
-        <div>
-          <p>Monthly Expense</p>
-          <p>{data.monthlyExpense}</p>
-        </div>
-
-        <div>
-          <p>Today's Expense</p>
-          <p>{data.todayExpense}</p>
-        </div>
-      </section>
-
-      {/* Category Summary */}
-      <section>
-        <h2>Category Summary</h2>
-
-        {Object.keys(data.categorySummary).length === 0 ? (
-          <p>No category data available.</p>
-        ) : (
-          Object.entries(data.categorySummary).map(([category, amount]) => (
-            <div key={category}>
-              <p>{category}</p>
-              <p>{amount}</p>
-            </div>
-          ))
-        )}
-      </section>
-
-      {/* Recent Expenses */}
-      <section>
-        <h2>Recent Expenses</h2>
-
-        {data.recentExpenses.length === 0 ? (
-          <p>No recent expenses available.</p>
-        ) : (
-          data.recentExpenses.map((expense) => (
-            <div key={expense.id}>
-              <p>{expense.name}</p>
-              <p>{expense.category}</p>
-              <p>{expense.amount}</p>
-              <p>{expense.type}</p>
-            </div>
-          ))
-        )}
-      </section>
-
-      {/* AI Insight */}
-      <section>
-        <h2>AI Insight</h2>
-        <p>{data.aiInsight || "No AI insight available."}</p>
       </section>
     </main>
   );
