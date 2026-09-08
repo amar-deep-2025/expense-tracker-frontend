@@ -26,3 +26,17 @@ export const getDashboardSummary = async () => {
   }
   return response.json();
 };
+
+export const getCategorySummary = async (start, end) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/dashboard/category-summary?start=${start}&end=${end}`,
+    {
+      method: "GET",
+      headers: getHeaders(),
+    },
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch category summary");
+  }
+  return response.json();
+};

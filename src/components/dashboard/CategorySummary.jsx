@@ -1,6 +1,12 @@
 import "./css/CategorySummary.css";
+
 const CategorySummary = ({ categorySummary, formatCurrency }) => {
-  const entries = Object.entries(categorySummary ?? {});
+  const entries = Array.isArray(categorySummary)
+    ? categorySummary
+    : Object.entries(categorySummary ?? {}).map(([category, amount]) => ({
+        category,
+        amount,
+      }));
 
   if (entries.length === 0) {
     return (
@@ -9,22 +15,22 @@ const CategorySummary = ({ categorySummary, formatCurrency }) => {
   }
 
   const total = entries.reduce(
-    (sum, [, amount]) => sum + Number(amount || 0),
+    (sum, item) => sum + Number(item.amount || 0),
     0,
   );
 
   return (
     <div className="category-summary-list">
-      {entries.map(([category, amount]) => {
-        const percentage = total > 0 ? (Number(amount) / total) * 100 : 0;
+      {entries.map((item) => {
+        const percentage = total > 0 ? (Number(item.amount) / total) * 100 : 0;
 
         return (
-          <div className="category-summary-item" key={category}>
+          <div className="category-summary-item" key={item.category}>
             <div className="category-summary-top">
-              <span className="category-summary-name">{category}</span>
+              <span className="category-summary-name">{item.category}</span>
 
               <span className="category-summary-amount">
-                {formatCurrency(amount)}
+                {formatCurrency(item.amount)}
               </span>
             </div>
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useDashboard from "../hooks/useDashboard";
 import formatCurrency from "../utils/formatCurrency";
 import SummaryCard from "../components/dashboard/SummaryCard";
@@ -6,9 +7,30 @@ import "./css/Dashboard.css";
 import CategorySummary from "../components/dashboard/CategorySummary";
 import RecentExpenses from "../components/dashboard/RecentExpenses";
 import AIInsight from "../components/dashboard/AIinsight";
+import { getCategorySummary } from "../services/dashboardService";
 
 const Dashboard = () => {
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const [filteredCategories, setFilteredCategories] = useState(null);
+
   const { data, loading, error, refetch } = useDashboard();
+
+  const handleCategoryFilter = async () => {
+    if (!startDate || !endDate) {
+      return;
+    }
+    try {
+      const start = `${startDate}T00:00:00`;
+      const end = `${endDate}T23:59:59`;
+
+      const response = await getCategorySummary(start, end);
+      setFilteredCategories(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   if (loading) {
     return <div>Loading dashboard...</div>;
@@ -89,9 +111,23 @@ const Dashboard = () => {
       </section>
       <section className="dashboard-section">
         <h4>Category Summary</h4>
-
+        <div className="category-filter">
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+          <button type="button" onClick={handleCategoryFilter}>
+            Apply
+          </button>
+        </div>
         <CategorySummary
-          categorySummary={data.categorySummary}
+          categorySummary={filteredCategories ?? data.categorySummary}
           formatCurrency={formatCurrency}
         />
       </section>
