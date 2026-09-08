@@ -222,3 +222,55 @@
     width: 100%;
   }
 }
+
+.dashboard-two-column {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .dashboard-two-column {
+    grid-template-columns: 1fr;
+  }
+}
+.monthly-summary-filter-input {
+  width: 180px;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 15px;
+  outline: none;
+}
+
+.monthly-summary-filter-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.12);
+}
+
+.monthly-summary-filter-button {
+  margin-left: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 8px;
+  background: #6366f1;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.monthly-summary-filter-button:hover {
+  background: #4f46e5;
+  transform: translateY(-1px);
+}
+
+.monthly-summary-filter-button:active {
+  transform: translateY(0);
+}

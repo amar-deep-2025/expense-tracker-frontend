@@ -11,13 +11,18 @@ import { getCategorySummary } from "../services/dashboardService";
 import useTopCategory from "../hooks/useTopCategory";
 import TopCategory from "../components/dashboard/topCategory";
 import MonthlyComparison from "../components/dashboard/MonthlyComparison";
-import useMonthlyComparison from "../hooks/useMontlhyComparison";
+import useMonthlyComparison from "../hooks/useMonthlyComparison";
+import useMonthlySummary from "../hooks/useMonthlySummary";
+import MonthlySummary from "../components/dashboard/MonthlySummary";
 
 const Dashboard = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
   const [filteredCategories, setFilteredCategories] = useState(null);
+
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   const { data, loading, error, refetch } = useDashboard();
 
@@ -34,6 +39,14 @@ const Dashboard = () => {
     error: monthlyComparisonError,
     refetch: refetchMonthlyComparison,
   } = useMonthlyComparison();
+
+  const {
+    data: monthlySummary,
+    loading: monthlySummaryLoading,
+    error: monthlySummaryError,
+    refetch: refetchMonthlySummary,
+  } = useMonthlySummary(selectedYear);
+
   console.log("Top Category:", topCategory);
 
   const handleCategoryFilter = async () => {
@@ -49,6 +62,10 @@ const Dashboard = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleMonthlySummaryFilter = () => {
+    setSelectedYear(year);
   };
 
   if (loading) {
@@ -176,9 +193,45 @@ const Dashboard = () => {
 
         <MonthlyComparison
           monthlyComparison={monthlyComparison}
+          loading={monthlyComparisonLoading}
+          error={monthlyComparisonError}
+          refetch={refetchMonthlyComparison}
           formatCurrency={formatCurrency}
         />
       </section>
+
+      <div className="dashboard-two-column">
+        <section className="dashboard-section">
+          <h4>Monthly Income & Expense</h4>
+
+          <input
+            type="number"
+            className="monthly-summary-filter-input"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+          />
+          <button
+            type="button"
+            className="monthly-summary-filter-button"
+            onClick={handleMonthlySummaryFilter}
+          >
+            Apply
+          </button>
+          <MonthlySummary
+            monthlySummary={monthlySummary}
+            loading={monthlySummaryLoading}
+            error={monthlySummaryError}
+            refetch={refetchMonthlySummary}
+            formatCurrency={formatCurrency}
+          />
+        </section>
+
+        <section className="dashboard-section">
+          <h4>Next API</h4>
+
+          {/* Next component */}
+        </section>
+      </div>
     </main>
   );
 };

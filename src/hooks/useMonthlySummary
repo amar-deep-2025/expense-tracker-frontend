@@ -1,0 +1,33 @@
+import { useCallback, useEffect, useState } from "react";
+import { getMonthlySummary } from "../services/dashboardService";
+
+const useMonthlySummary = (year) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchMonthlySummary = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await getMonthlySummary(year);
+      setData(response);
+    } catch (err) {
+      setError(err.message || "Unable to fetch Monthly Summary");
+    } finally {
+      setLoading(false);
+    }
+  }, [year]);
+  useEffect(() => {
+    fetchMonthlySummary();
+  }, [fetchMonthlySummary]);
+
+  return {
+    data,
+    loading,
+    error,
+    refetch: fetchMonthlySummary,
+  };
+};
+export default useMonthlySummary;

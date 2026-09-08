@@ -60,7 +60,23 @@ export const getMonthlyComparison = async () => {
   });
 
   if (!response.ok) {
-    throw new Error("Unable to find Monthly Comparison data");
+    throw new Error("Failed to fetch Monthly Comparison data");
+  }
+
+  return response.json();
+};
+
+export const getMonthlySummary = async (year) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/dashboard/monthly?year=${year}`,
+    {
+      method: "GET",
+      headers: getHeaders(),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch monthly summary");
   }
 
   return response.json();
