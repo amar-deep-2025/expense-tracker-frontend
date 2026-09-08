@@ -235,15 +235,22 @@
     grid-template-columns: 1fr;
   }
 }
+.monthly-summary-filter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
 .monthly-summary-filter-input {
-  width: 180px;
-  height: 44px;
-  padding: 0 12px;
+  width: 200px;
+  height: 40px;
+  padding: 0 18px;
   border: 1px solid #d1d5db;
-  border-radius: 8px;
+  border-radius: 12px;
   background: #ffffff;
   color: #111827;
-  font-size: 15px;
+  font-size: 22px;
   outline: none;
 }
 
@@ -253,14 +260,13 @@
 }
 
 .monthly-summary-filter-button {
-  margin-left: 8px;
-  height: 44px;
-  padding: 0 20px;
+  height: 40px;
+  padding: 0 28px;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   background: #6366f1;
   color: #ffffff;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;

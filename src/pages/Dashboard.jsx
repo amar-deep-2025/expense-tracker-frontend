@@ -1,28 +1,36 @@
 import { useState } from "react";
+
 import useDashboard from "../hooks/useDashboard";
+import useTopCategory from "../hooks/useTopCategory";
+import useMonthlyComparison from "../hooks/useMonthlyComparison";
+import useMonthlySummary from "../hooks/useMonthlySummary";
+
 import formatCurrency from "../utils/formatCurrency";
+
 import SummaryCard from "../components/dashboard/SummaryCard";
-import { Wallet, ArrowDown, PieChart, Clock3, Scale } from "lucide-react";
-import "./css/Dashboard.css";
 import CategorySummary from "../components/dashboard/CategorySummary";
 import RecentExpenses from "../components/dashboard/RecentExpenses";
 import AIInsight from "../components/dashboard/AIinsight";
-import { getCategorySummary } from "../services/dashboardService";
-import useTopCategory from "../hooks/useTopCategory";
 import TopCategory from "../components/dashboard/topCategory";
 import MonthlyComparison from "../components/dashboard/MonthlyComparison";
-import useMonthlyComparison from "../hooks/useMonthlyComparison";
-import useMonthlySummary from "../hooks/useMonthlySummary";
 import MonthlySummary from "../components/dashboard/MonthlySummary";
+
+import { getDashboardSummaryByDate } from "../services/dashboardService";
+
+import { Wallet, ArrowDown, PieChart, Clock3, Scale } from "lucide-react";
+
+import "./css/Dashboard.css";
 
 const Dashboard = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const [filteredCategories, setFilteredCategories] = useState(null);
-
   const [year, setYear] = useState(new Date().getFullYear());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+
+  const [filteredDashboard, setFilteredDashboard] = useState(null);
+  const [filterLoading, setFilterLoading] = useState(false);
+  const [filterError, setFilterError] = useState(null);
 
   const { data, loading, error, refetch } = useDashboard();
 
@@ -47,20 +55,31 @@ const Dashboard = () => {
     refetch: refetchMonthlySummary,
   } = useMonthlySummary(selectedYear);
 
-  console.log("Top Category:", topCategory);
-
-  const handleCategoryFilter = async () => {
+  const handleDashboardFilter = async () => {
     if (!startDate || !endDate) {
+      setFilterError("Please select both start and end dates.");
       return;
     }
+
+    if (startDate > endDate) {
+      setFilterError("Start date must be before end date.");
+      return;
+    }
+
     try {
+      setFilterLoading(true);
+      setFilterError(null);
+
       const start = `${startDate}T00:00:00`;
       const end = `${endDate}T23:59:59`;
 
-      const response = await getCategorySummary(start, end);
-      setFilteredCategories(response);
+      const response = await getDashboardSummaryByDate(start, end);
+
+      setFilteredDashboard(response);
     } catch (err) {
-      console.log(err);
+      setFilterError(err.message || "Failed to filter dashboard");
+    } finally {
+      setFilterLoading(false);
     }
   };
 
@@ -87,26 +106,93 @@ const Dashboard = () => {
   if (!data) {
     return <div>No dashboard data available.</div>;
   }
-  console.log("Dashboard Data:" + data);
-  console.log("Recent Expenses: " + data.recentExpenses);
+
+  const dashboardData = filteredDashboard ?? data;
+
+  /*
+   * Top category:
+   *
+   * Normal dashboard:
+   *    useTopCategory API
+   *
+   * Filtered dashboard:
+   *    derive from filtered categorySummary
+   */
+  const filteredTopCategory = Object.entries(
+    dashboardData.categorySummary ?? {},
+  ).reduce(
+    (top, [category, amount]) =>
+      Number(amount) > Number(top.amount)
+        ? {
+            category,
+            amount: Number(amount),
+          }
+        : top,
+    {
+      category: "",
+      amount: 0,
+    },
+  );
+
+  const topCategoryData = filteredDashboard ? filteredTopCategory : topCategory;
+
+  const topCategoryIsLoading = filteredDashboard ? false : topCategoryLoading;
+
+  const topCategoryErrorMessage = filteredDashboard ? null : topCategoryError;
+
   return (
     <main className="Dashboard">
+      {/* Dashboard Header */}
+
       <section className="dashboard-header">
         <div className="dashboard-header-content">
           <div className="dashboard-welcome">
             <h1>Good Morning! 👋</h1>
+
             <p>Here's your financial overview for the selected period.</p>
           </div>
 
-          <AIInsight aiInsight={data.aiInsight} />
+          <AIInsight aiInsight={dashboardData.aiInsight} />
         </div>
       </section>
+
+      {/* Dashboard Date Filter */}
+
+      <section className="dashboard-section">
+        <h4>Filter Dashboard</h4>
+
+        <div className="category-filter">
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+
+          <button
+            type="button"
+            onClick={handleDashboardFilter}
+            disabled={filterLoading}
+          >
+            {filterLoading ? "Applying..." : "Apply"}
+          </button>
+        </div>
+
+        {filterError && <p className="filter-error">{filterError}</p>}
+      </section>
+
       {/* Financial Summary */}
+
       <section className="dashboard-section">
         <div className="summary-cards">
           <SummaryCard
             title="Total Income"
-            value={formatCurrency(data.totalIncome)}
+            value={formatCurrency(dashboardData.totalIncome)}
             icon={Wallet}
             variant="income"
             subtitle="Total income"
@@ -114,15 +200,17 @@ const Dashboard = () => {
 
           <SummaryCard
             title="Total Expense"
-            value={formatCurrency(data.totalExpense)}
+            value={formatCurrency(dashboardData.totalExpense)}
             icon={ArrowDown}
             variant="expense"
-            subtitle={`This month: ${formatCurrency(data.monthlyExpense)}`}
+            subtitle={`This month: ${formatCurrency(
+              dashboardData.monthlyExpense,
+            )}`}
           />
 
           <SummaryCard
             title="Total Budget"
-            value={formatCurrency(data.totalBudget)}
+            value={formatCurrency(dashboardData.totalBudget)}
             icon={PieChart}
             variant="budget"
             subtitle="Overall budget"
@@ -130,7 +218,7 @@ const Dashboard = () => {
 
           <SummaryCard
             title="Remaining Budget"
-            value={formatCurrency(data.budgetRemaining)}
+            value={formatCurrency(dashboardData.budgetRemaining)}
             icon={Clock3}
             variant="remaining"
             subtitle="Available budget"
@@ -138,55 +226,51 @@ const Dashboard = () => {
 
           <SummaryCard
             title="Current Balance"
-            value={formatCurrency(data.balance)}
+            value={formatCurrency(dashboardData.balance)}
             icon={Scale}
-            variant={data.balance < 0 ? "balance negative" : "balance"}
-            subtitle={`Today: ${formatCurrency(data.todayExpense)}`}
+            variant={dashboardData.balance < 0 ? "balance negative" : "balance"}
+            subtitle={`Today: ${formatCurrency(dashboardData.todayExpense)}`}
           />
         </div>
       </section>
+
+      {/* Category Summary */}
+
       <section className="dashboard-section">
         <h4>Category Summary</h4>
-        <div className="category-filter">
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-          <button type="button" onClick={handleCategoryFilter}>
-            Apply
-          </button>
-        </div>
+
         <CategorySummary
-          categorySummary={filteredCategories ?? data.categorySummary}
+          categorySummary={dashboardData.categorySummary}
           formatCurrency={formatCurrency}
         />
       </section>
 
+      {/* Recent Expenses */}
+
       <section className="dashboard-section">
         <h4>Recent Expenses</h4>
+
         <RecentExpenses
-          expenses={data.recentExpenses}
+          expenses={dashboardData.recentExpenses}
           formatCurrency={formatCurrency}
         />
       </section>
+
+      {/* Top Spending Category */}
 
       <section className="dashboard-section">
         <h4>Top Spending Category</h4>
 
         <TopCategory
-          topCategory={topCategory}
-          loading={topCategoryLoading}
-          error={topCategoryError}
+          topCategory={topCategoryData}
+          loading={topCategoryIsLoading}
+          error={topCategoryErrorMessage}
           refetch={refetchTopCategory}
           formatCurrency={formatCurrency}
         />
       </section>
+
+      {/* Monthly Comparison */}
 
       <section className="dashboard-section">
         <h4>Last Month Comparison</h4>
@@ -200,23 +284,29 @@ const Dashboard = () => {
         />
       </section>
 
+      {/* Monthly Income & Expense */}
+
       <div className="dashboard-two-column">
         <section className="dashboard-section">
           <h4>Monthly Income & Expense</h4>
 
-          <input
-            type="number"
-            className="monthly-summary-filter-input"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-          />
-          <button
-            type="button"
-            className="monthly-summary-filter-button"
-            onClick={handleMonthlySummaryFilter}
-          >
-            Apply
-          </button>
+          <div className="monthly-summary-filter">
+            <input
+              type="number"
+              className="monthly-summary-filter-input"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            />
+
+            <button
+              type="button"
+              className="monthly-summary-filter-button"
+              onClick={handleMonthlySummaryFilter}
+            >
+              Apply
+            </button>
+          </div>
+
           <MonthlySummary
             monthlySummary={monthlySummary}
             loading={monthlySummaryLoading}
@@ -224,12 +314,6 @@ const Dashboard = () => {
             refetch={refetchMonthlySummary}
             formatCurrency={formatCurrency}
           />
-        </section>
-
-        <section className="dashboard-section">
-          <h4>Next API</h4>
-
-          {/* Next component */}
         </section>
       </div>
     </main>

@@ -1,7 +1,7 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const token = localStorage.setItem(
   "token",
-  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbWFyLmZ1bGxzdGFjazIwMjVAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzg4ODQ3MTkzLCJleHAiOjE3ODg4ODMxOTN9.mxOHllKSWzlCdM1b6_-_2dM4djxFKUJkom5sUNC2Iek",
+  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbWFyLmZ1bGxzdGFjazIwMjVAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzg4ODg4MjM1LCJleHAiOjE3ODg5MjQyMzV9.w4rGhGmJoPqrqa_Xb8R3X7Ot1-iM0j_U5Kfw1YBgc-8",
 );
 
 const getHeaders = () => {
@@ -79,5 +79,19 @@ export const getMonthlySummary = async (year) => {
     throw new Error("Failed to fetch monthly summary");
   }
 
+  return response.json();
+};
+
+export const getDashboardSummaryByDate = async (start, end) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/dashboard/summary-by-date?start=${start}&end=${end}`,
+    {
+      method: "GET",
+      headers: getHeaders(),
+    },
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch dashboard summary by date");
+  }
   return response.json();
 };
