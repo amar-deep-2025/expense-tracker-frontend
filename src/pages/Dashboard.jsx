@@ -10,6 +10,8 @@ import AIInsight from "../components/dashboard/AIinsight";
 import { getCategorySummary } from "../services/dashboardService";
 import useTopCategory from "../hooks/useTopCategory";
 import TopCategory from "../components/dashboard/topCategory";
+import MonthlyComparison from "../components/dashboard/MonthlyComparison";
+import useMonthlyComparison from "../hooks/useMontlhyComparison";
 
 const Dashboard = () => {
   const [startDate, setStartDate] = useState("");
@@ -26,6 +28,12 @@ const Dashboard = () => {
     refetch: refetchTopCategory,
   } = useTopCategory();
 
+  const {
+    data: monthlyComparison,
+    loading: monthlyComparisonLoading,
+    error: monthlyComparisonError,
+    refetch: refetchMonthlyComparison,
+  } = useMonthlyComparison();
   console.log("Top Category:", topCategory);
 
   const handleCategoryFilter = async () => {
@@ -159,6 +167,15 @@ const Dashboard = () => {
           loading={topCategoryLoading}
           error={topCategoryError}
           refetch={refetchTopCategory}
+          formatCurrency={formatCurrency}
+        />
+      </section>
+
+      <section className="dashboard-section">
+        <h4>Last Month Comparison</h4>
+
+        <MonthlyComparison
+          monthlyComparison={monthlyComparison}
           formatCurrency={formatCurrency}
         />
       </section>

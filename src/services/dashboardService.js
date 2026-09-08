@@ -52,3 +52,16 @@ export const getTopCategory = async () => {
   }
   return response.json();
 };
+
+export const getMonthlyComparison = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/dashboard/compare`, {
+    method: "GET",
+    headers: getHeaders(),
+  });
+
+  if (!response.ok) {
+    throw new Error("Unable to find Monthly Comparison data");
+  }
+
+  return response.json();
+};
