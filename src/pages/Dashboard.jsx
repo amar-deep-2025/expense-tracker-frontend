@@ -8,6 +8,8 @@ import CategorySummary from "../components/dashboard/CategorySummary";
 import RecentExpenses from "../components/dashboard/RecentExpenses";
 import AIInsight from "../components/dashboard/AIinsight";
 import { getCategorySummary } from "../services/dashboardService";
+import useTopCategory from "../hooks/useTopCategory";
+import TopCategory from "../components/dashboard/topCategory";
 
 const Dashboard = () => {
   const [startDate, setStartDate] = useState("");
@@ -16,6 +18,15 @@ const Dashboard = () => {
   const [filteredCategories, setFilteredCategories] = useState(null);
 
   const { data, loading, error, refetch } = useDashboard();
+
+  const {
+    data: topCategory,
+    loading: topCategoryLoading,
+    error: topCategoryError,
+    refetch: refetchTopCategory,
+  } = useTopCategory();
+
+  console.log("Top Category:", topCategory);
 
   const handleCategoryFilter = async () => {
     if (!startDate || !endDate) {
@@ -136,6 +147,18 @@ const Dashboard = () => {
         <h4>Recent Expenses</h4>
         <RecentExpenses
           expenses={data.recentExpenses}
+          formatCurrency={formatCurrency}
+        />
+      </section>
+
+      <section className="dashboard-section">
+        <h4>Top Spending Category</h4>
+
+        <TopCategory
+          topCategory={topCategory}
+          loading={topCategoryLoading}
+          error={topCategoryError}
+          refetch={refetchTopCategory}
           formatCurrency={formatCurrency}
         />
       </section>
