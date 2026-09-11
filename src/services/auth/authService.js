@@ -17,3 +17,11 @@ export const verifyOtp = async (requestData) => {
   );
   return response.data;
 };
+
+export const loginUser = async (loginData) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/api/auth/login`,
+    loginData,
+  );
+  return response.data;
+};
