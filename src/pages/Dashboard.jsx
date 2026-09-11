@@ -19,6 +19,8 @@ import { getDashboardSummaryByDate } from "../services/dashboardService";
 
 import { Wallet, ArrowDown, PieChart, Clock3, Scale } from "lucide-react";
 
+import useLogout from "../hooks/auth/useLogout";
+
 import "./css/Dashboard.css";
 
 const Dashboard = () => {
@@ -54,6 +56,8 @@ const Dashboard = () => {
     error: monthlySummaryError,
     refetch: refetchMonthlySummary,
   } = useMonthlySummary(selectedYear);
+
+  const { logout, loading: logoutLoading, error: logoutError } = useLogout();
 
   const handleDashboardFilter = async () => {
     if (!startDate || !endDate) {
@@ -153,6 +157,10 @@ const Dashboard = () => {
           </div>
 
           <AIInsight aiInsight={dashboardData.aiInsight} />
+
+          <button type="button" onClick={logout} disabled={logoutLoading}>
+            {logoutLoading ? "Logging out..." : "Logout"}
+          </button>
         </div>
       </section>
 

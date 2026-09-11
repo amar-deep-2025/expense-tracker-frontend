@@ -40,3 +40,16 @@ export const resetPassword = async (data) => {
   );
   return response.data;
 };
+export const logoutUser = async () => {
+  const token = localStorage.getItem("token");
+  const response = await axios.post(
+    `${API_BASE_URL}/api/auth/logout`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response.data;
+};
