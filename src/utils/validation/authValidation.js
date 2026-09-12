@@ -38,3 +38,15 @@ export const validationOtp = (formData) => {
 
   return errors;
 };
+export const validationLogin = (loginData) => {
+  const errors = {};
+  if (!loginData.email.trim()) {
+    errors.email = "Email is required";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginData.email)) {
+    errors.email = "Enter a valid email , email should be contain @ symbol";
+  }
+  if (!loginData.password) {
+    errors.password = "Password is required";
+  }
+  return errors;
+};

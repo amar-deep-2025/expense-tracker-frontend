@@ -2,6 +2,9 @@ import { useState } from "react";
 import useLoginUser from "../../hooks/auth/useLoginUser";
 import { useNavigate } from "react-router-dom";
 import "./css/LoginForm.css";
+import { toast } from "react-toastify";
+import { validationLogin } from "../../utils/validation/authValidation";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 const LoginForm = () => {
   const [loginData, setLoginData] = useState({
     email: "",
@@ -9,7 +12,7 @@ const LoginForm = () => {
   });
   const navigate = useNavigate();
   const { login, loading, error, success } = useLoginUser();
-
+  const [showPassword, setShowPassword] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -21,6 +24,11 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errors = validationLogin(loginData);
+    if (Object.keys(errors).length > 0) {
+      toast.error(Object.values(errors)[0]);
+      return;
+    }
     try {
       await login(loginData);
       navigate("/dashboard");
@@ -42,7 +50,7 @@ const LoginForm = () => {
 
           <input
             id="email"
-            type="email"
+            type="text"
             name="email"
             value={loginData.email}
             onChange={handleChange}
@@ -53,14 +61,24 @@ const LoginForm = () => {
         <div className="login-field">
           <label htmlFor="password">Password</label>
 
-          <input
-            id="password"
-            type="password"
-            name="password"
-            value={loginData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-          />
+          <div className="password-wrapper">
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={loginData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+            />
+
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
         </div>
 
         <button className="login-button" type="submit" disabled={loading}>
