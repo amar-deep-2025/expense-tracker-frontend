@@ -2,10 +2,11 @@ import { useState } from "react";
 import useVerifyOtp from "../../hooks/auth/useVerifyOtp";
 import "./css/VerifyOtpForm.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import { validationOtp } from "../../utils/validation/authValidation";
+import { toast } from "react-toastify";
 const VerifyOtpForm = () => {
   const location = useLocation();
   const email = location.state?.email;
-
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     otp: "",
@@ -24,7 +25,11 @@ const VerifyOtpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const errors = validationOtp(formData);
+    if (Object.keys(errors).length > 0) {
+      toast.error(Object.values(errors)[0]);
+      return;
+    }
     try {
       await verifyOtp({
         email: email,

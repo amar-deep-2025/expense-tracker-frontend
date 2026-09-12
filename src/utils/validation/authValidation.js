@@ -27,3 +27,14 @@ export const validationRegister = (formData) => {
 
   return errors;
 };
+export const validationOtp = (formData) => {
+  const errors = {};
+
+  if (!formData.otp.trim()) {
+    errors.otp = "OTP is required";
+  } else if (!/^\d{6}$/.test(formData.otp)) {
+    errors.otp = "OTP must be 6 digits";
+  }
+
+  return errors;
+};
