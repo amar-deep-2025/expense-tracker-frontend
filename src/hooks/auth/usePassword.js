@@ -1,24 +1,26 @@
 import { useState } from "react";
 
 import { forgotPassword, resetPassword } from "../../services/auth/authService";
+import { toast } from "react-toastify";
 
 const usePassword = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  // const [error, setError] = useState(null);
+  // const [success, setSuccess] = useState(null);
 
   const forgot = async (email) => {
     try {
       setLoading(true);
-      setError(null);
-      setSuccess(null);
+      // setError(null);
+      // setSuccess(null);
 
       const response = await forgotPassword(email);
-      setSuccess("Reset link sent successfully");
+
+      toast.success("Reset link sent successfully");
 
       return response;
     } catch (err) {
-      setError(
+      toast.error(
         err.response?.data?.message ||
           err.response?.data ||
           "forgot password is failed",
@@ -33,14 +35,14 @@ const usePassword = () => {
   const reset = async (data) => {
     try {
       setLoading(true);
-      setError(null);
-      setSuccess(null);
+      // setError(null);
+      // setSuccess(null);
 
       const response = await resetPassword(data);
-      setSuccess("Password reset Successfully");
+      toast.success("Password reset Successfully");
       return response;
     } catch (err) {
-      setError(
+      toast.error(
         err.response?.data?.message ||
           err.response?.data ||
           "Password reset Failed",
@@ -55,8 +57,6 @@ const usePassword = () => {
     forgot,
     reset,
     loading,
-    error,
-    success,
   };
 };
 

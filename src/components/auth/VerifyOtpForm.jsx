@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
-
 import useVerifyOtp from "../../hooks/auth/useVerifyOtp";
-
 import "./css/VerifyOtpForm.css";
-
+import { useNavigate, useLocation } from "react-router-dom";
 const VerifyOtpForm = () => {
   const location = useLocation();
   const email = location.state?.email;
 
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     otp: "",
   });
 
-  const { verifyOtp, loading, error, success } = useVerifyOtp();
+  const { verifyOtp, loading } = useVerifyOtp();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,6 +30,9 @@ const VerifyOtpForm = () => {
         email: email,
         otp: formData.otp,
       });
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
     } catch (err) {
       console.log("OTP verification failed", err);
     }
@@ -57,14 +58,9 @@ const VerifyOtpForm = () => {
             placeholder="Enter OTP"
           />
         </div>
-
         <button className="verify-otp-button" type="submit" disabled={loading}>
           {loading ? "Verifying..." : "Verify OTP"}
         </button>
-
-        {error && <p className="verify-otp-error">{error}</p>}
-
-        {success && <p className="verify-otp-success">{success}</p>}
       </form>
     </div>
   );

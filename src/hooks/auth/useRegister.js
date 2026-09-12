@@ -1,21 +1,22 @@
 import { useState } from "react";
 import { registerUser } from "../../services/auth/authService";
+import { toast } from "react-toastify";
 const useRegister = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  // const [error, setError] = useState(null);
+  // const [success, setSuccess] = useState(null);
 
   const register = async (userData) => {
     try {
       setLoading(true);
-      setError(null);
-      setSuccess(null);
+      // setError(null);
+      // setSuccess(null);
 
       const response = await registerUser(userData);
-      setSuccess(response);
+      toast.success(response);
       return response;
     } catch (err) {
-      setError(
+      toast.error(
         err.response?.data?.message ||
           err.response?.data ||
           "Registration failed",
@@ -29,8 +30,6 @@ const useRegister = () => {
   return {
     register,
     loading,
-    error,
-    success,
   };
 };
 

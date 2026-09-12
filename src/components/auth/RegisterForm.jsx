@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import useRegister from "../../hooks/auth/useRegister";
 
 import "./css/RegistrationForm.css";
+import { toast } from "react-toastify";
+import { validationRegister } from "../../utils/validation/authValidation";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +15,7 @@ const RegisterForm = () => {
     password: "",
     phone: "",
   });
-
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const { register, loading, error, success } = useRegister();
@@ -28,15 +31,21 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const errors = validationRegister(formData);
+    if (Object.keys(errors).length > 0) {
+      toast.error(Object.values(errors)[0]);
+      return;
+    }
     try {
       await register(formData);
 
-      navigate("/verify-otp", {
-        state: {
-          email: formData.email,
-        },
-      });
+      setTimeout(() => {
+        navigate("/verify-otp", {
+          state: {
+            email: formData.email,
+          },
+        });
+      }, 2000);
     } catch (err) {
       console.error("Registration failed", err);
     }
@@ -66,7 +75,7 @@ const RegisterForm = () => {
           <label htmlFor="email">Email</label>
           <input
             id="email"
-            type="email"
+            type="text"
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -76,14 +85,23 @@ const RegisterForm = () => {
 
         <div className="register-field">
           <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-          />
+          <div className="password-wrapper">
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
         </div>
 
         <div className="register-field">
