@@ -3,7 +3,8 @@ import { useState } from "react";
 import usePassword from "../../hooks/auth/usePassword";
 
 import "./css/forgotPasswordForm.css";
-
+import { toast } from "react-toastify";
+import { validationForgotPassword } from "../../utils/validation/authValidation";
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState({
     email: "",
@@ -22,6 +23,11 @@ const ForgotPasswordForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errors = validationForgotPassword(email);
+    if (Object.keys(errors).length > 0) {
+      toast.error(Object.values(errors)[0]);
+      return;
+    }
 
     try {
       await forgot(email);
@@ -44,12 +50,11 @@ const ForgotPasswordForm = () => {
 
           <input
             id="email"
-            type="email"
+            type="text"
             name="email"
             value={email.email}
             onChange={handleChange}
             placeholder="Enter your email"
-            required
           />
         </div>
 

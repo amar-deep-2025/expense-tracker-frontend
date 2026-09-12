@@ -3,6 +3,8 @@ import { useState } from "react";
 
 import usePassword from "../../hooks/auth/usePassword";
 import "./css/ResetPasswordForm.css";
+import { toast } from "react-toastify";
+import { validationResetPassword } from "../../utils/validation/authValidation";
 
 const ResetPasswordForm = () => {
   const [password, setPassword] = useState({
@@ -27,7 +29,11 @@ const ResetPasswordForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const errors = validationResetPassword(password);
+    if (Object.keys(errors).length > 0) {
+      toast.error(Object.values(errors)[0]);
+      return;
+    }
     try {
       await reset({
         token,
@@ -59,7 +65,6 @@ const ResetPasswordForm = () => {
             value={password.newPassword}
             onChange={handleChange}
             placeholder="Enter new password"
-            required
           />
         </div>
 

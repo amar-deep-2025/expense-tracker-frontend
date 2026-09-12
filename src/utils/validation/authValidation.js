@@ -50,3 +50,25 @@ export const validationLogin = (loginData) => {
   }
   return errors;
 };
+export const validationForgotPassword = (email) => {
+  const errors = {};
+  if (!email.email.trim()) {
+    errors.email = "Email is required";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.email)) {
+    errors.email = "Enter a valid email, email should be contain @ symbol";
+  }
+  return errors;
+};
+
+export const validationResetPassword = (formData) => {
+  const errors = {};
+
+  if (!formData.newPassword) {
+    errors.newPassword = "New password is required";
+  } else if (formData.newPassword.length < 8) {
+    errors.newPassword =
+      "Enter a valid password, password should be greater than 7 digit";
+  }
+
+  return errors;
+};
