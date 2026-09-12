@@ -1,0 +1,77 @@
+.create-expense {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.create-expense h2 {
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.create-expense p {
+  margin-bottom: 25px;
+  color: #666;
+}
+
+.create-expense form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.create-expense input,
+.create-expense textarea,
+.create-expense select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.create-expense input:focus,
+.create-expense textarea:focus,
+.create-expense select:focus {
+  border-color: #333;
+}
+
+.create-expense textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.expense-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.expense-field label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.create-expense-button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 6px;
+  background: #333;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.create-expense-button:hover {
+  background: #222;
+}
+
+.create-expense-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

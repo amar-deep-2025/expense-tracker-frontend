@@ -1,9 +1,4 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const token = localStorage.setItem(
-  "token",
-  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbWFyLmZ1bGxzdGFjazIwMjVAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzg4ODg4MjM1LCJleHAiOjE3ODg5MjQyMzV9.w4rGhGmJoPqrqa_Xb8R3X7Ot1-iM0j_U5Kfw1YBgc-8",
-);
-
 const getHeaders = () => {
   const token = localStorage.getItem("token");
   if (!token) {
