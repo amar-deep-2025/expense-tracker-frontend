@@ -4,6 +4,7 @@ import {
   getAllBudgets,
   getBudgetById,
   updateBudget,
+  deleteBudget,
 } from "../../services/budget/budgetService";
 import { useNavigate } from "react-router-dom";
 
@@ -94,11 +95,31 @@ const useBudget = () => {
       setLoading(false);
     }
   };
+  const remove = async (id) => {
+    try {
+      setLoading(true);
+      setError(null);
+      setSuccess(null);
+      const response = await deleteBudget(id);
+      setSuccess(response?.message || " Transaction deleted successfully");
+      return response;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to delete Transaction",
+      );
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
   return {
     create,
     getAll,
     getById,
     update,
+    remove,
     loading,
     error,
     success,

@@ -40,3 +40,10 @@ export const updateBudget = async (id, budgetData) => {
   );
   return response.data;
 };
+export const deleteBudget = async (id) => {
+  const response = await axios.delete(`${API_BASE_URL}/api/budgets/${id}`, {
+    headers: getHeaders(),
+  });
+
+  return response.data;
+};
