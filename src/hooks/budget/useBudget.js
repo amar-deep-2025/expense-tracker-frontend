@@ -3,6 +3,7 @@ import {
   createBudget,
   getAllBudgets,
   getBudgetById,
+  updateBudget,
 } from "../../services/budget/budgetService";
 import { useNavigate } from "react-router-dom";
 
@@ -74,10 +75,30 @@ const useBudget = () => {
       setLoading(false);
     }
   };
+  const update = async (id, expenseData) => {
+    try {
+      setLoading(true);
+      setError(null);
+      setSuccess(null);
+      const response = await updateBudget(id, expenseData);
+      setSuccess("Budget updated successfully");
+      return response;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to fetch Budget",
+      );
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
   return {
     create,
     getAll,
     getById,
+    update,
     loading,
     error,
     success,
