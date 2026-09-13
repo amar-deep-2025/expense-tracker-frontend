@@ -18,3 +18,9 @@ export const createBudget = async (budgetData) => {
 
   return response.data;
 };
+export const getAllBudgets = async () => {
+  const response = await axios.get(`${API_BASE_URL}/api/budgets`, {
+    headers: getHeaders(),
+  });
+  return response.data;
+};

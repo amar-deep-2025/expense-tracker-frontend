@@ -1,0 +1,126 @@
+.budget-list {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.budget-list h2 {
+  grid-column: 1 / -1;
+  margin: 0 0 20px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.budget-card {
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.budget-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.budget-card h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.budget-card p {
+  margin: 7px 0;
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.budget-card .budget-amount {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* View Details */
+
+.budget-details-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 9px 14px;
+  border-radius: 6px;
+  background: #1f2937;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.budget-details-link:hover {
+  background: #111827;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+.budget-list-empty {
+  grid-column: 1 / -1;
+  padding: 30px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 10px;
+  color: #6b7280;
+}
+
+.budget-loading,
+.budget-error {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 15px;
+}
+
+.budget-error {
+  color: #dc2626;
+}
+
+/* Responsive */
+
+@media (max-width: 1000px) {
+  .budget-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .budget-list {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 500px) {
+  .budget-list {
+    grid-template-columns: 1fr;
+  }
+
+  .budget-details-link {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+}

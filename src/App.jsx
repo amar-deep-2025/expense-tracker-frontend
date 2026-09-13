@@ -12,6 +12,7 @@ import ExpenseDetailsPage from "./pages/Expense/ExpenseDetailsPage";
 import "./index.css";
 import UpdateExpensePage from "./pages/Expense/UpdateExpensePage";
 import CreateBudgetPage from "./pages/Budget/CreateBudgetPage";
+import BudgetsPage from "./pages/Budget/BudgetsPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/expenses/:id" element={<ExpenseDetailsPage />} />,
         <Route path="expenses/:id/edit" element={<UpdateExpensePage />} />
         <Route path="/budget" element={<CreateBudgetPage />} />
+        <Route path="/budgets" element={<BudgetsPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>

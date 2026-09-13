@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   createBudget,
+  getAllBudgets,
 } from "../../services/budget/budgetService";
 import { useNavigate } from "react-router-dom";
 
@@ -36,10 +37,27 @@ const useBudget = () => {
       setLoading(false);
     }
   };
- 
+  const getAll = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await getAllBudgets();
+      return response;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "failed to fetch budgets",
+      );
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return {
     create,
+    getAll,
     loading,
     error,
     success,
