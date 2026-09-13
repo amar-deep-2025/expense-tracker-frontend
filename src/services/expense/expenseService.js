@@ -29,3 +29,9 @@ export const getAllExpenses = async () => {
   });
   return response.data;
 };
+export const getExpenseById = async (id) => {
+  const response = await axios.get(`${API_BASE_URL}/api/expenses/${id}`, {
+    headers: getHeaders(),
+  });
+  return response.data;
+};

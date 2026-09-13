@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import useExpense from "../../hooks/expense/useExpense";
 import "./css/ExpenseList.css";
+import { Link } from "react-router-dom";
 
 const ExpenseList = () => {
   const [expenses, setExpenses] = useState([]);
@@ -46,8 +47,7 @@ const ExpenseList = () => {
             <p>Category: {expense.category}</p>
 
             <p>Description: {expense.description}</p>
-
-            <p>Created At: {new Date(expense.createdAt).toLocaleString()}</p>
+            <Link to={`/expenses/${expense.id}`}>View Details</Link>
           </div>
         ))
       )}

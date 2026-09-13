@@ -8,6 +8,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import ExpensePage from "./pages/Expense/ExpensePage";
 import ExpensesPage from "./pages/Expense/ExpensesPage";
+import ExpenseDetailsPage from "./pages/Expense/ExpenseDetailsPage";
 import "./index.css";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/expense" element={<ExpensePage />} />
         <Route path="/expenses" element={<ExpensesPage />} />
+        <Route path="/expenses/:id" element={<ExpenseDetailsPage />} />,
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>

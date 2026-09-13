@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   createExpense,
   getAllExpenses,
+  getExpenseById,
 } from "../../services/expense/expenseService";
 import { useNavigate } from "react-router-dom";
 
@@ -56,9 +57,29 @@ const useExpense = () => {
     }
   };
 
+  const getById = async (id) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await getExpenseById(id);
+      return response;
+    } catch (err) {
+      console.log(err.response?.data?.message);
+      console.log(err.response?.data);
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "failed to fetch expense",
+      );
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
   return {
     create,
     getAll,
+    getById,
     loading,
     error,
     success,
