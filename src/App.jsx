@@ -7,14 +7,8 @@ import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import ExpensePage from "./pages/Expense/ExpensePage";
+import ExpensesPage from "./pages/Expense/ExpensesPage";
 import "./index.css";
-
-import ResetPassword from "./pages/ResetPassword";
-
-import "./index.css";
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -27,6 +21,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/expense" element={<ExpensePage />} />
+        <Route path="/expenses" element={<ExpensesPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>

@@ -24,7 +24,7 @@ export const createExpense = async (expenseData) => {
 };
 
 export const getAllExpenses = async () => {
-  const response = await axios.post(`${API_BASE_URL}/api/expense`, {
+  const response = await axios.get(`${API_BASE_URL}/api/expenses`, {
     headers: getHeaders(),
   });
   return response.data;
