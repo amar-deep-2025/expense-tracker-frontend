@@ -24,3 +24,9 @@ export const getAllBudgets = async () => {
   });
   return response.data;
 };
+export const getBudgetById = async (id) => {
+  const response = await axios.get(`${API_BASE_URL}/api/budgets/${id}`, {
+    headers: getHeaders(),
+  });
+  return response.data;
+};
