@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { createExpense } from "../../services/expense/expenseService";
+import {
+  createExpense,
+  getAllExpenses,
+} from "../../services/expense/expenseService";
 import { useNavigate } from "react-router-dom";
 
 const useExpense = () => {
@@ -35,8 +38,27 @@ const useExpense = () => {
     }
   };
 
+  const getAll = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await getAllExpenses();
+      return response;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "failed to fetch expenses",
+      );
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     create,
+    getAll,
     loading,
     error,
     success,
