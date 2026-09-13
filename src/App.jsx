@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import VerifyOtp from "./pages/VerifyOtp";
@@ -7,6 +8,13 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import ExpensePage from "./pages/Expense/ExpensePage";
 import "./index.css";
+
+import ResetPassword from "./pages/ResetPassword";
+
+import "./index.css";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
