@@ -1,0 +1,131 @@
+.update-expense-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: #f5f7fa;
+  box-sizing: border-box;
+}
+
+.update-expense-card {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 28px 30px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.update-expense-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.update-expense-header {
+  margin-bottom: 22px;
+}
+
+.update-expense-header h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.update-expense-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.update-expense-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.update-expense-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.update-expense-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.update-expense-field input,
+.update-expense-field textarea,
+.update-expense-field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1f2937;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.update-expense-field input:focus,
+.update-expense-field textarea:focus,
+.update-expense-field select:focus {
+  border-color: #4b5563;
+}
+
+.update-expense-field textarea {
+  min-height: 75px;
+  resize: vertical;
+}
+
+.update-expense-button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 11px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #1f2937;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.update-expense-button:hover {
+  background: #111827;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+.update-expense-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 600px) {
+  .update-expense-page {
+    padding: 25px 15px;
+  }
+
+  .update-expense-card {
+    padding: 24px 20px;
+  }
+
+  .update-expense-header h2 {
+    font-size: 20px;
+  }
+}

@@ -31,7 +31,7 @@ const ExpenseList = () => {
 
   return (
     <div className="expense-list">
-      <h2>All Expenses</h2>
+      <h2>All Transactions</h2>
 
       {expenses.length === 0 ? (
         <p className="expense-list-empty">No expenses found</p>
@@ -47,7 +47,12 @@ const ExpenseList = () => {
             <p>Category: {expense.category}</p>
 
             <p>Description: {expense.description}</p>
-            <Link to={`/expenses/${expense.id}`}>View Details</Link>
+            <Link
+              to={`/expenses/${expense.id}`}
+              className="expense-details-link"
+            >
+              View Details
+            </Link>
           </div>
         ))
       )}

@@ -68,7 +68,7 @@ const ExpenseDetails = () => {
     <div className="expense-details-page">
       <div className="expense-details-card">
         <div className="expense-details-header">
-          <h2>Expense Details</h2>
+          <h2>Transaction Details</h2>
 
           <span className={`expense-type ${expense.type.toLowerCase()}`}>
             {expense.type}

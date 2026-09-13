@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import useExpense from "../../hooks/expense/useExpense";
 import { validationCreateExpense } from "../../utils/validation/expenseValidation";
-// import "./css/UpdateExpense.css";
+import "./css/UpdateExpense.css";
 
 const UpdateExpense = () => {
   const { id } = useParams();
@@ -85,7 +85,7 @@ const UpdateExpense = () => {
     <div className="update-expense-page">
       <div className="update-expense-card">
         <div className="update-expense-header">
-          <h2>Update Expense</h2>
+          <h2>Update Transaction</h2>
           <p>Update your expense or income details</p>
         </div>
 
