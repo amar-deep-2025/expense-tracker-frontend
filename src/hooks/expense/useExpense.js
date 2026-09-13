@@ -3,6 +3,8 @@ import {
   createExpense,
   getAllExpenses,
   getExpenseById,
+  updateExpense,
+  deleteExpense,
 } from "../../services/expense/expenseService";
 import { useNavigate } from "react-router-dom";
 
@@ -76,10 +78,50 @@ const useExpense = () => {
       setLoading(false);
     }
   };
+  const update = async (id, expenseData) => {
+    try {
+      setLoading(true);
+      setError(null);
+      setSuccess(null);
+      const response = await updateExpense(id, expenseData);
+      setSuccess("Expense updated successfully");
+      return response;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to fetch expense",
+      );
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+  const remove = async (id) => {
+    try {
+      setLoading(true);
+      setError(null);
+      setSuccess(null);
+      const response = await deleteExpense(id);
+      setSuccess(response?.message || " Transaction deleted successfully");
+      return response;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to delete Transaction",
+      );
+      throw err;
+    }finally{
+      setLoading(false);
+    }
+  };
   return {
     create,
     getAll,
     getById,
+    update,
+    remove,
     loading,
     error,
     success,

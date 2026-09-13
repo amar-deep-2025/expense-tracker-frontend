@@ -1,13 +1,43 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import useExpense from "../../hooks/expense/useExpense";
 import "./css/ExpenseDetails.css";
 
 const ExpenseDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [expense, setExpense] = useState(null);
 
-  const { getById, loading, error } = useExpense();
+  const { remove, getById, loading, error } = useExpense();
+
+  const handleDelete = async () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this transaction?",
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const response = await remove(id);
+
+      toast.success(response?.message || "Transaction deleted successfully");
+
+      setTimeout(() => {
+        navigate("/expenses");
+      }, 2000);
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to delete transaction",
+      );
+    }
+  };
 
   useEffect(() => {
     const fetchExpense = async () => {
@@ -39,6 +69,7 @@ const ExpenseDetails = () => {
       <div className="expense-details-card">
         <div className="expense-details-header">
           <h2>Expense Details</h2>
+
           <span className={`expense-type ${expense.type.toLowerCase()}`}>
             {expense.type}
           </span>
@@ -75,13 +106,23 @@ const ExpenseDetails = () => {
             <strong>{new Date(expense.updatedAt).toLocaleString()}</strong>
           </div>
         </div>
+
         <div className="expense-details-actions">
-          <button type="button" className="expense-edit-button">
+          <button
+            type="button"
+            className="expense-edit-button"
+            onClick={() => navigate(`/expenses/${id}/edit`)}
+          >
             Edit
           </button>
 
-          <button type="button" className="expense-delete-button">
-            Delete
+          <button
+            type="button"
+            className="expense-delete-button"
+            onClick={handleDelete}
+            disabled={loading}
+          >
+            {loading ? "Deleting..." : "Delete"}
           </button>
         </div>
       </div>

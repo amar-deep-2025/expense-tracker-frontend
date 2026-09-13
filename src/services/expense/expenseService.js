@@ -35,3 +35,20 @@ export const getExpenseById = async (id) => {
   });
   return response.data;
 };
+export const updateExpense = async (id, expenseData) => {
+  const response = await axios.put(
+    ` ${API_BASE_URL}/api/expenses/${id}`,
+    expenseData,
+    {
+      headers: getHeaders(),
+    },
+  );
+  return response.data;
+};
+export const deleteExpense = async (id) => {
+  const response = await axios.delete(`${API_BASE_URL}/api/expenses/${id}`, {
+    headers: getHeaders(),
+  });
+
+  return response.data;
+};
