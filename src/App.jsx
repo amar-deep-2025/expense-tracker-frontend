@@ -17,6 +17,7 @@ import BudgetDetailsPage from "./pages/Budget/BudgetDetailsPage";
 import UpdateBudgetPage from "./pages/Budget/UpdateBudgetPage";
 import Reports from "./components/report/Reports";
 import ProfilePage from "./pages/user/ProfilePage";
+import AIAssistantPage from "./pages/ai/AIAssistantPage";
 function App() {
   return (
     <BrowserRouter>
@@ -38,6 +39,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/ai" element={<AIAssistantPage />} />
       </Routes>
     </BrowserRouter>
   );
