@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   getCurrentUser,
   uploadProfileImage,
+  updateProfile,
 } from "../../services/user/userService";
 const useUser = () => {
   const [user, setUser] = useState(null);
@@ -47,10 +48,33 @@ const useUser = () => {
       setLoading(false);
     }
   };
+  const update = async (profileData) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const data = await updateProfile(profileData);
+
+      setUser(data);
+
+      return data;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to update profile",
+      );
+
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
   return {
     user,
     getMe,
     uploadImage,
+    update,
     loading,
     error,
   };

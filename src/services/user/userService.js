@@ -31,3 +31,14 @@ export const uploadProfileImage = async (file) => {
   );
   return response.data;
 };
+
+export const updateProfile = async (profileData) => {
+  const response = await axios.put(
+    `${API_BASE_URL}/api/users/me`,
+    profileData,
+    {
+      headers: getHeaders(),
+    },
+  );
+  return response.data;
+};
