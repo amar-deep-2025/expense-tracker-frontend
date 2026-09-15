@@ -3,6 +3,8 @@ import {
   getCurrentUser,
   uploadProfileImage,
   updateProfile,
+  changeEmail,
+  verifyEmailChange,
 } from "../../services/user/userService";
 const useUser = () => {
   const [user, setUser] = useState(null);
@@ -70,11 +72,56 @@ const useUser = () => {
       setLoading(false);
     }
   };
+  const changeUserEmail = async (newEmail) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const data = await changeEmail(newEmail);
+
+      return data;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to change email",
+      );
+
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verifyUserEmailChange = async (otp) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const data = await verifyEmailChange(otp);
+
+      setUser(data);
+
+      return data;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to verify email",
+      );
+
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
   return {
     user,
     getMe,
     uploadImage,
     update,
+    changeUserEmail,
+    verifyUserEmailChange,
     loading,
     error,
   };

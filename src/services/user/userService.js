@@ -42,3 +42,31 @@ export const updateProfile = async (profileData) => {
   );
   return response.data;
 };
+export const changeEmail = async (newEmail) => {
+  const response = await axios.patch(
+    `${API_BASE_URL}/api/users/me/change-email`,
+    {
+      newEmail,
+    },
+    {
+      headers: getHeaders(),
+    },
+  );
+
+  return response.data;
+};
+
+export const verifyEmailChange = async (otp) => {
+  const response = await axios.patch(
+    `${API_BASE_URL}/api/users/me/verify-email`,
+    null,
+    {
+      params: {
+        otp,
+      },
+      headers: getHeaders(),
+    },
+  );
+
+  return response.data;
+};

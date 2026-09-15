@@ -5,7 +5,16 @@ import "./css/Profile.css";
 import formatDateTime from "../../utils/formatDateTime";
 
 const Profile = () => {
-  const { user, getMe, uploadImage, update, loading, error } = useUser();
+  const {
+    user,
+    getMe,
+    uploadImage,
+    update,
+    changeUserEmail,
+    verifyUserEmailChange,
+    loading,
+    error,
+  } = useUser();
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -17,9 +26,22 @@ const Profile = () => {
     phone: "",
   });
 
+  const [isChangingEmail, setIsChangingEmail] = useState(false);
+
+  const [emailData, setEmailData] = useState({
+    newEmail: "",
+    otp: "",
+  });
+
+  const [otpSent, setOtpSent] = useState(false);
+
   useEffect(() => {
     getMe();
   }, []);
+
+  // -------------------------
+  // Profile Image
+  // -------------------------
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -59,6 +81,10 @@ const Profile = () => {
       );
     }
   };
+
+  // -------------------------
+  // Update Profile
+  // -------------------------
 
   const handleEdit = () => {
     setFormData({
@@ -117,6 +143,95 @@ const Profile = () => {
     });
   };
 
+  // -------------------------
+  // Change Email
+  // -------------------------
+
+  const handleEmailChange = (e) => {
+    const { name, value } = e.target;
+
+    setEmailData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSendEmailOtp = async (e) => {
+    e.preventDefault();
+
+    if (!emailData.newEmail.trim()) {
+      toast.error("New email is required");
+      return;
+    }
+
+    if (emailData.newEmail === user.email) {
+      toast.error("New email must be different from current email");
+      return;
+    }
+
+    try {
+      await changeUserEmail(emailData.newEmail);
+
+      toast.success("OTP sent to your new email");
+
+      setOtpSent(true);
+    } catch (err) {
+      console.error("Change email failed", err);
+
+      toast.error(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to send OTP",
+      );
+    }
+  };
+
+  const handleVerifyEmailOtp = async (e) => {
+    e.preventDefault();
+
+    if (!emailData.otp.trim()) {
+      toast.error("OTP is required");
+      return;
+    }
+
+    try {
+      await verifyUserEmailChange(emailData.otp);
+
+      toast.success("Email changed successfully");
+
+      setEmailData({
+        newEmail: "",
+        otp: "",
+      });
+
+      setOtpSent(false);
+      setIsChangingEmail(false);
+
+      await getMe();
+    } catch (err) {
+      console.error("Email verification failed", err);
+
+      toast.error(
+        err.response?.data?.message || err.response?.data || "Invalid OTP",
+      );
+    }
+  };
+
+  const handleCancelEmailChange = () => {
+    setIsChangingEmail(false);
+
+    setOtpSent(false);
+
+    setEmailData({
+      newEmail: "",
+      otp: "",
+    });
+  };
+
+  // -------------------------
+  // Loading / Error
+  // -------------------------
+
   if (loading && !user) {
     return <p>Loading profile...</p>;
   }
@@ -132,6 +247,7 @@ const Profile = () => {
       {user && (
         <div className="profile-card">
           {/* Profile Image */}
+
           {(previewUrl || user.profileImage) && (
             <img
               src={
@@ -144,6 +260,7 @@ const Profile = () => {
           )}
 
           {/* Image Upload */}
+
           <div className="profile-image-upload">
             <input type="file" accept="image/*" onChange={handleFileChange} />
 
@@ -157,6 +274,7 @@ const Profile = () => {
           </div>
 
           {/* Profile Information */}
+
           {isEditing ? (
             <form onSubmit={handleUpdate} className="profile-edit-form">
               <div className="profile-field">
@@ -239,6 +357,98 @@ const Profile = () => {
               </button>
             </>
           )}
+
+          {/* Change Email */}
+
+          <div className="change-email-section">
+            {!isChangingEmail ? (
+              <button
+                type="button"
+                onClick={() => setIsChangingEmail(true)}
+                className="change-email-button"
+              >
+                Change Email
+              </button>
+            ) : (
+              <div className="change-email-form">
+                <h3>Change Email</h3>
+
+                {!otpSent ? (
+                  <form onSubmit={handleSendEmailOtp}>
+                    <div className="profile-field">
+                      <label htmlFor="newEmail">New Email</label>
+
+                      <input
+                        id="newEmail"
+                        type="email"
+                        name="newEmail"
+                        value={emailData.newEmail}
+                        onChange={handleEmailChange}
+                        placeholder="Enter new email"
+                      />
+                    </div>
+
+                    <div className="email-actions">
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="save-profile-button"
+                      >
+                        {loading ? "Sending..." : "Send OTP"}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={handleCancelEmailChange}
+                        className="cancel-profile-button"
+                        disabled={loading}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <form onSubmit={handleVerifyEmailOtp}>
+                    <p className="otp-message">
+                      OTP has been sent to your new email.
+                    </p>
+
+                    <div className="profile-field">
+                      <label htmlFor="otp">OTP</label>
+
+                      <input
+                        id="otp"
+                        type="text"
+                        name="otp"
+                        value={emailData.otp}
+                        onChange={handleEmailChange}
+                        placeholder="Enter OTP"
+                      />
+                    </div>
+
+                    <div className="email-actions">
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="save-profile-button"
+                      >
+                        {loading ? "Verifying..." : "Verify OTP"}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={handleCancelEmailChange}
+                        className="cancel-profile-button"
+                        disabled={loading}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
