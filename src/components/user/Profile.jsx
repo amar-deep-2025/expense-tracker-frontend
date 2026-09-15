@@ -1,36 +1,97 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import useUser from "../../hooks/user/useUser";
 import "./css/Profile.css";
 import formatDateTime from "../../utils/formatDateTime";
+
 const Profile = () => {
-  const { user, getMe, loading, error } = useUser();
+  const { user, getMe, uploadImage, loading, error } = useUser();
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   useEffect(() => {
     getMe();
   }, []);
 
-  if (loading) {
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    setSelectedFile(file);
+
+    const preview = URL.createObjectURL(file);
+    setPreviewUrl(preview);
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      toast.error("Please select an image");
+      return;
+    }
+
+    try {
+      await uploadImage(selectedFile);
+
+      toast.success("Profile image uploaded successfully");
+
+      setSelectedFile(null);
+
+      await getMe();
+    } catch (err) {
+      console.error("Profile image upload failed", err);
+
+      toast.error(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to upload profile image",
+      );
+    }
+  };
+
+  if (loading && !user) {
     return <p>Loading profile...</p>;
   }
 
-  if (error) {
+  if (error && !user) {
     return <p>{error}</p>;
   }
+
   return (
     <div className="profile-page">
       <h2>Profile</h2>
 
       {user && (
         <div className="profile-card">
-          {user.profileImage && (
+          {/* Profile Image */}
+          {(previewUrl || user.profileImage) && (
             <img
-              src={user.profileImage}
+              src={
+                previewUrl ||
+                `${import.meta.env.VITE_API_BASE_URL}/uploads/${user.profileImage}`
+              }
               alt="Profile"
-              width="120"
-              height="120"
+              className="profile-image"
             />
           )}
 
+          {/* Image Upload */}
+          <div className="profile-image-upload">
+            <input type="file" accept="image/*" onChange={handleFileChange} />
+
+            <button
+              type="button"
+              onClick={handleUpload}
+              disabled={loading || !selectedFile}
+            >
+              {loading ? "Uploading..." : "Upload Image"}
+            </button>
+          </div>
+
+          {/* User Information */}
           <p>
             <strong>Name:</strong> {user.name}
           </p>

@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { getCurrentUser } from "../../services/user/userService";
+import {
+  getCurrentUser,
+  uploadProfileImage,
+} from "../../services/user/userService";
 const useUser = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -24,9 +27,30 @@ const useUser = () => {
       setLoading(false);
     }
   };
+  const uploadImage = async (file) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const data = await uploadProfileImage(file);
+
+      return data;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to upload profile image",
+      );
+
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
   return {
     user,
     getMe,
+    uploadImage,
     loading,
     error,
   };
