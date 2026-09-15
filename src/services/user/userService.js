@@ -70,3 +70,30 @@ export const verifyEmailChange = async (otp) => {
 
   return response.data;
 };
+export const changePassword = async (oldPassword, newPassword) => {
+  const response = await axios.patch(
+    `${API_BASE_URL}/api/users/me/change-password`,
+    {
+      oldPassword,
+      newPassword,
+    },
+    {
+      headers: getHeaders(),
+    },
+  );
+
+  return response.data;
+};
+
+export const verifyPasswordChange = async (otp) => {
+  const response = await axios.patch(
+    `${API_BASE_URL}/api/users/me/verify-password`,
+    null,
+    {
+      params: { otp },
+      headers: getHeaders(),
+    },
+  );
+
+  return response.data;
+};

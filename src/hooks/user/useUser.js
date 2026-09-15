@@ -5,6 +5,8 @@ import {
   updateProfile,
   changeEmail,
   verifyEmailChange,
+  changePassword,
+  verifyPasswordChange,
 } from "../../services/user/userService";
 const useUser = () => {
   const [user, setUser] = useState(null);
@@ -115,6 +117,45 @@ const useUser = () => {
       setLoading(false);
     }
   };
+  const changeUserPassword = async (oldPassword, newPassword) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const data = await changePassword(oldPassword, newPassword);
+
+      return data;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to change password",
+      );
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verifyUserPasswordChange = async (otp) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const data = await verifyPasswordChange(otp);
+
+      return data;
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to verify password",
+      );
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
   return {
     user,
     getMe,
@@ -122,6 +163,8 @@ const useUser = () => {
     update,
     changeUserEmail,
     verifyUserEmailChange,
+    changeUserPassword,
+    verifyUserPasswordChange,
     loading,
     error,
   };

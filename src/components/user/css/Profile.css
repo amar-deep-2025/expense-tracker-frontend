@@ -200,6 +200,8 @@
 }
 /* Change Email */
 
+/* Change Email */
+
 .change-email-section {
   margin-top: 30px;
   padding-top: 25px;
@@ -240,4 +242,42 @@
   padding: 0 !important;
   border-bottom: none !important;
   color: #475569;
+}
+
+
+/* Change Password */
+
+.change-password-section {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.change-password-form h3 {
+  margin: 0 0 20px;
+  font-size: 20px;
+  color: #1e293b;
+}
+
+.change-password-button {
+  padding: 9px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #475569;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.change-password-button:hover {
+  background: #334155;
+  transform: translateY(-1px);
+}
+
+.password-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
 }

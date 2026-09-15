@@ -12,6 +12,8 @@ const Profile = () => {
     update,
     changeUserEmail,
     verifyUserEmailChange,
+    changeUserPassword,
+    verifyUserPasswordChange,
     loading,
     error,
   } = useUser();
@@ -26,6 +28,10 @@ const Profile = () => {
     phone: "",
   });
 
+  // -------------------------
+  // Change Email
+  // -------------------------
+
   const [isChangingEmail, setIsChangingEmail] = useState(false);
 
   const [emailData, setEmailData] = useState({
@@ -34,6 +40,21 @@ const Profile = () => {
   });
 
   const [otpSent, setOtpSent] = useState(false);
+
+  // -------------------------
+  // Change Password
+  // -------------------------
+
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+
+  const [passwordData, setPasswordData] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+    otp: "",
+  });
+
+  const [passwordOtpSent, setPasswordOtpSent] = useState(false);
 
   useEffect(() => {
     getMe();
@@ -159,18 +180,20 @@ const Profile = () => {
   const handleSendEmailOtp = async (e) => {
     e.preventDefault();
 
-    if (!emailData.newEmail.trim()) {
+    const newEmail = emailData.newEmail.trim();
+
+    if (!newEmail) {
       toast.error("New email is required");
       return;
     }
 
-    if (emailData.newEmail === user.email) {
+    if (newEmail === user.email) {
       toast.error("New email must be different from current email");
       return;
     }
 
     try {
-      await changeUserEmail(emailData.newEmail);
+      await changeUserEmail(newEmail);
 
       toast.success("OTP sent to your new email");
 
@@ -189,13 +212,15 @@ const Profile = () => {
   const handleVerifyEmailOtp = async (e) => {
     e.preventDefault();
 
-    if (!emailData.otp.trim()) {
+    const otp = emailData.otp.trim();
+
+    if (!otp) {
       toast.error("OTP is required");
       return;
     }
 
     try {
-      await verifyUserEmailChange(emailData.otp);
+      await verifyUserEmailChange(otp);
 
       toast.success("Email changed successfully");
 
@@ -219,11 +244,122 @@ const Profile = () => {
 
   const handleCancelEmailChange = () => {
     setIsChangingEmail(false);
-
     setOtpSent(false);
 
     setEmailData({
       newEmail: "",
+      otp: "",
+    });
+  };
+
+  // -------------------------
+  // Change Password
+  // -------------------------
+
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+
+    setPasswordData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSendPasswordOtp = async (e) => {
+    e.preventDefault();
+
+    const oldPassword = passwordData.oldPassword.trim();
+    const newPassword = passwordData.newPassword.trim();
+    const confirmPassword = passwordData.confirmPassword.trim();
+
+    if (!oldPassword) {
+      toast.error("Old password is required");
+      return;
+    }
+
+    if (!newPassword) {
+      toast.error("New password is required");
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      toast.error("New password must be at least 6 characters");
+      return;
+    }
+
+    if (!confirmPassword) {
+      toast.error("Confirm password is required");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    if (oldPassword === newPassword) {
+      toast.error("New password must be different from old password");
+      return;
+    }
+
+    try {
+      await changeUserPassword(oldPassword, newPassword);
+
+      toast.success("OTP sent to your email");
+
+      setPasswordOtpSent(true);
+    } catch (err) {
+      console.error("Change password failed", err);
+
+      toast.error(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to send OTP",
+      );
+    }
+  };
+
+  const handleVerifyPasswordOtp = async (e) => {
+    e.preventDefault();
+
+    const otp = passwordData.otp.trim();
+
+    if (!otp) {
+      toast.error("OTP is required");
+      return;
+    }
+
+    try {
+      await verifyUserPasswordChange(otp);
+
+      toast.success("Password changed successfully");
+
+      setPasswordData({
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+        otp: "",
+      });
+
+      setPasswordOtpSent(false);
+      setIsChangingPassword(false);
+    } catch (err) {
+      console.error("Password verification failed", err);
+
+      toast.error(
+        err.response?.data?.message || err.response?.data || "Invalid OTP",
+      );
+    }
+  };
+
+  const handleCancelPasswordChange = () => {
+    setIsChangingPassword(false);
+    setPasswordOtpSent(false);
+
+    setPasswordData({
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
       otp: "",
     });
   };
@@ -414,10 +550,10 @@ const Profile = () => {
                     </p>
 
                     <div className="profile-field">
-                      <label htmlFor="otp">OTP</label>
+                      <label htmlFor="emailOtp">OTP</label>
 
                       <input
-                        id="otp"
+                        id="emailOtp"
                         type="text"
                         name="otp"
                         value={emailData.otp}
@@ -438,6 +574,126 @@ const Profile = () => {
                       <button
                         type="button"
                         onClick={handleCancelEmailChange}
+                        className="cancel-profile-button"
+                        disabled={loading}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Change Password */}
+
+          <div className="change-password-section">
+            {!isChangingPassword ? (
+              <button
+                type="button"
+                onClick={() => setIsChangingPassword(true)}
+                className="change-password-button"
+              >
+                Change Password
+              </button>
+            ) : (
+              <div className="change-password-form">
+                <h3>Change Password</h3>
+
+                {!passwordOtpSent ? (
+                  <form onSubmit={handleSendPasswordOtp}>
+                    <div className="profile-field">
+                      <label htmlFor="oldPassword">Old Password</label>
+
+                      <input
+                        id="oldPassword"
+                        type="password"
+                        name="oldPassword"
+                        value={passwordData.oldPassword}
+                        onChange={handlePasswordChange}
+                        placeholder="Enter old password"
+                      />
+                    </div>
+
+                    <div className="profile-field">
+                      <label htmlFor="newPassword">New Password</label>
+
+                      <input
+                        id="newPassword"
+                        type="password"
+                        name="newPassword"
+                        value={passwordData.newPassword}
+                        onChange={handlePasswordChange}
+                        placeholder="Enter new password"
+                      />
+                    </div>
+
+                    <div className="profile-field">
+                      <label htmlFor="confirmPassword">
+                        Confirm New Password
+                      </label>
+
+                      <input
+                        id="confirmPassword"
+                        type="password"
+                        name="confirmPassword"
+                        value={passwordData.confirmPassword}
+                        onChange={handlePasswordChange}
+                        placeholder="Confirm new password"
+                      />
+                    </div>
+
+                    <div className="password-actions">
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="save-profile-button"
+                      >
+                        {loading ? "Sending..." : "Send OTP"}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={handleCancelPasswordChange}
+                        className="cancel-profile-button"
+                        disabled={loading}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <form onSubmit={handleVerifyPasswordOtp}>
+                    <p className="otp-message">
+                      OTP has been sent to your email.
+                    </p>
+
+                    <div className="profile-field">
+                      <label htmlFor="passwordOtp">OTP</label>
+
+                      <input
+                        id="passwordOtp"
+                        type="text"
+                        name="otp"
+                        value={passwordData.otp}
+                        onChange={handlePasswordChange}
+                        placeholder="Enter OTP"
+                      />
+                    </div>
+
+                    <div className="password-actions">
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="save-profile-button"
+                      >
+                        {loading ? "Verifying..." : "Verify OTP"}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={handleCancelPasswordChange}
                         className="cancel-profile-button"
                         disabled={loading}
                       >
