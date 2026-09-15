@@ -16,6 +16,7 @@ import BudgetsPage from "./pages/Budget/BudgetsPage";
 import BudgetDetailsPage from "./pages/Budget/BudgetDetailsPage";
 import UpdateBudgetPage from "./pages/Budget/UpdateBudgetPage";
 import Reports from "./components/report/Reports";
+import ProfilePage from "./pages/user/ProfilePage";
 function App() {
   return (
     <BrowserRouter>
@@ -36,6 +37,7 @@ function App() {
         <Route path="budgets/:id/edit" element={<UpdateBudgetPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/reports" element={<Reports />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );
