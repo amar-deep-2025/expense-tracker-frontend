@@ -1,0 +1,104 @@
+.create-budget {
+  width: 100%;
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 28px 30px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.create-budget-header {
+  margin-bottom: 22px;
+}
+
+.create-budget-header h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.create-budget-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.create-budget-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.create-budget-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.create-budget-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.create-budget-field input,
+.create-budget-field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1f2937;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.create-budget-field input:focus,
+.create-budget-field select:focus {
+  border-color: #4b5563;
+}
+
+.create-budget-button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 11px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #1f2937;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.create-budget-button:hover {
+  background: #111827;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+.create-budget-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 600px) {
+  .create-budget {
+    margin: 25px 15px;
+    padding: 24px 20px;
+  }
+
+  .create-budget-header h2 {
+    font-size: 20px;
+  }
+}

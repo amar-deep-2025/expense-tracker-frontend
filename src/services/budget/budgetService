@@ -1,0 +1,49 @@
+import axios from "axios";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+const getHeaders = () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    throw new Error("Authentication token not found");
+  }
+  return {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+};
+export const createBudget = async (budgetData) => {
+  const response = await axios.post(`${API_BASE_URL}/api/budgets`, budgetData, {
+    headers: getHeaders(),
+  });
+
+  return response.data;
+};
+export const getAllBudgets = async () => {
+  const response = await axios.get(`${API_BASE_URL}/api/budgets`, {
+    headers: getHeaders(),
+  });
+  return response.data;
+};
+export const getBudgetById = async (id) => {
+  const response = await axios.get(`${API_BASE_URL}/api/budgets/${id}`, {
+    headers: getHeaders(),
+  });
+  return response.data;
+};
+export const updateBudget = async (id, budgetData) => {
+  const response = await axios.put(
+    ` ${API_BASE_URL}/api/budgets/${id}`,
+    budgetData,
+    {
+      headers: getHeaders(),
+    },
+  );
+  return response.data;
+};
+export const deleteBudget = async (id) => {
+  const response = await axios.delete(`${API_BASE_URL}/api/budgets/${id}`, {
+    headers: getHeaders(),
+  });
+
+  return response.data;
+};

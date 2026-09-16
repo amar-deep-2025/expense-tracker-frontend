@@ -11,6 +11,10 @@ import ExpensesPage from "./pages/Expense/ExpensesPage";
 import ExpenseDetailsPage from "./pages/Expense/ExpenseDetailsPage";
 import "./index.css";
 import UpdateExpensePage from "./pages/Expense/UpdateExpensePage";
+import CreateBudgetPage from "./pages/Budget/CreateBudgetPage";
+import BudgetsPage from "./pages/Budget/BudgetsPage";
+import BudgetDetailsPage from "./pages/Budget/BudgetDetailsPage";
+import UpdateBudgetPage from "./pages/Budget/UpdateBudgetPage";
 
 function App() {
   return (
@@ -26,6 +30,10 @@ function App() {
         <Route path="/expenses" element={<ExpensesPage />} />
         <Route path="/expenses/:id" element={<ExpenseDetailsPage />} />,
         <Route path="expenses/:id/edit" element={<UpdateExpensePage />} />
+        <Route path="/budget" element={<CreateBudgetPage />} />
+        <Route path="/budgets" element={<BudgetsPage />} />
+        <Route path="/budgets/:id" element={<BudgetDetailsPage />} />,
+        <Route path="budgets/:id/edit" element={<UpdateBudgetPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
