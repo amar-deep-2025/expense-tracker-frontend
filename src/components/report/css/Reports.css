@@ -1,0 +1,112 @@
+.reports-page {
+  min-height: 100%;
+  padding: 30px;
+  background: #f8fafc;
+}
+
+.reports-header {
+  margin-bottom: 25px;
+}
+
+.reports-header h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.reports-header p {
+  margin-top: 8px;
+  color: #64748b;
+  font-size: 15px;
+}
+
+.reports-card {
+  max-width: 700px;
+  padding: 28px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.reports-card h3 {
+  margin: 0 0 25px;
+  font-size: 20px;
+}
+
+.reports-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.report-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.report-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.report-field select,
+.report-field input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: #ffffff;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-field select:focus,
+.report-field input:focus {
+  border-color: #64748b;
+  box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.12);
+}
+
+.report-download-button {
+  margin-top: 5px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 7px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-download-button:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(37, 99, 235, 0.2);
+}
+
+.report-download-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.report-download-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .reports-page {
+    padding: 20px;
+  }
+
+  .reports-card {
+    padding: 20px;
+  }
+
+  .reports-header h2 {
+    font-size: 24px;
+  }
+}
