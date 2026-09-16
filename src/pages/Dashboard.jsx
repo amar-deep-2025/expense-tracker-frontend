@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import useDashboard from "../hooks/useDashboard";
 import useTopCategory from "../hooks/useTopCategory";
@@ -20,13 +20,13 @@ import { getDashboardSummaryByDate } from "../services/dashboardService";
 import { Wallet, ArrowDown, PieChart, Clock3, Scale } from "lucide-react";
 
 import useLogout from "../hooks/auth/useLogout";
+import useUser from "../hooks/user/useUser";
 
 import "./css/Dashboard.css";
 
 const Dashboard = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-
   const [year, setYear] = useState(new Date().getFullYear());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
@@ -35,6 +35,8 @@ const Dashboard = () => {
   const [filterError, setFilterError] = useState(null);
 
   const { data, loading, error, refetch } = useDashboard();
+
+  const { user, getMe } = useUser();
 
   const {
     data: topCategory,
@@ -58,6 +60,26 @@ const Dashboard = () => {
   } = useMonthlySummary(selectedYear);
 
   const { logout, loading: logoutLoading, error: logoutError } = useLogout();
+
+  // Fetch logged-in user
+  useEffect(() => {
+    getMe();
+  }, []);
+
+  // Dynamic greeting based on current time
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+
+    if (hour < 12) {
+      return "Good Morning";
+    }
+
+    if (hour < 17) {
+      return "Good Afternoon";
+    }
+
+    return "Good Evening";
+  };
 
   const handleDashboardFilter = async () => {
     if (!startDate || !endDate) {
@@ -113,15 +135,6 @@ const Dashboard = () => {
 
   const dashboardData = filteredDashboard ?? data;
 
-  /*
-   * Top category:
-   *
-   * Normal dashboard:
-   *    useTopCategory API
-   *
-   * Filtered dashboard:
-   *    derive from filtered categorySummary
-   */
   const filteredTopCategory = Object.entries(
     dashboardData.categorySummary ?? {},
   ).reduce(
@@ -147,25 +160,21 @@ const Dashboard = () => {
   return (
     <main className="Dashboard">
       {/* Dashboard Header */}
-
       <section className="dashboard-header">
         <div className="dashboard-header-content">
           <div className="dashboard-welcome">
-            <h1>Good Morning! 👋</h1>
+            <h1>
+              {getGreeting()}, {user?.name || "User"}! 👋
+            </h1>
 
             <p>Here's your financial overview for the selected period.</p>
           </div>
 
           <AIInsight aiInsight={dashboardData.aiInsight} />
-
-          <button type="button" onClick={logout} disabled={logoutLoading}>
-            {logoutLoading ? "Logging out..." : "Logout"}
-          </button>
         </div>
       </section>
 
       {/* Dashboard Date Filter */}
-
       <section className="dashboard-section">
         <h4>Filter Dashboard</h4>
 
@@ -195,7 +204,6 @@ const Dashboard = () => {
       </section>
 
       {/* Financial Summary */}
-
       <section className="dashboard-section">
         <div className="summary-cards">
           <SummaryCard
@@ -243,7 +251,6 @@ const Dashboard = () => {
       </section>
 
       {/* Category Summary */}
-
       <section className="dashboard-section">
         <h4>Category Summary</h4>
 
@@ -254,7 +261,6 @@ const Dashboard = () => {
       </section>
 
       {/* Recent Expenses */}
-
       <section className="dashboard-section">
         <h4>Recent Expenses</h4>
 
@@ -265,7 +271,6 @@ const Dashboard = () => {
       </section>
 
       {/* Top Spending Category */}
-
       <section className="dashboard-section">
         <h4>Top Spending Category</h4>
 
@@ -279,7 +284,6 @@ const Dashboard = () => {
       </section>
 
       {/* Monthly Comparison */}
-
       <section className="dashboard-section">
         <h4>Last Month Comparison</h4>
 
@@ -293,7 +297,6 @@ const Dashboard = () => {
       </section>
 
       {/* Monthly Income & Expense */}
-
       <div className="dashboard-two-column">
         <section className="dashboard-section">
           <h4>Monthly Income & Expense</h4>

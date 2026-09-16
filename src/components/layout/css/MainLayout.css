@@ -1,0 +1,35 @@
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.main-layout {
+  min-height: 100vh;
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content {
+  min-height: 100vh;
+  margin-left: 250px;
+  box-sizing: border-box;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-content {
+    margin-left: 70px;
+  }
+}

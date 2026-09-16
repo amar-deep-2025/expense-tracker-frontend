@@ -18,28 +18,32 @@ import UpdateBudgetPage from "./pages/Budget/UpdateBudgetPage";
 import Reports from "./components/report/Reports";
 import ProfilePage from "./pages/user/ProfilePage";
 import AIAssistantPage from "./pages/ai/AIAssistantPage";
+import LandingPage from "./pages/landing/LandingPage";
+import MainLayout from "./components/layout/MainLayout";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Register />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/expense" element={<ExpensePage />} />
-        <Route path="/expenses" element={<ExpensesPage />} />
-        <Route path="/expenses/:id" element={<ExpenseDetailsPage />} />,
-        <Route path="expenses/:id/edit" element={<UpdateExpensePage />} />
-        <Route path="/budget" element={<CreateBudgetPage />} />
-        <Route path="/budgets" element={<BudgetsPage />} />
-        <Route path="/budgets/:id" element={<BudgetDetailsPage />} />,
-        <Route path="budgets/:id/edit" element={<UpdateBudgetPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/ai" element={<AIAssistantPage />} />
+        <Route element={<MainLayout />}>
+          <Route path="/expense" element={<ExpensePage />} />
+          <Route path="/expenses" element={<ExpensesPage />} />
+          <Route path="/expenses/:id" element={<ExpenseDetailsPage />} />,
+          <Route path="expenses/:id/edit" element={<UpdateExpensePage />} />
+          <Route path="/budget" element={<CreateBudgetPage />} />
+          <Route path="/budgets" element={<BudgetsPage />} />
+          <Route path="/budgets/:id" element={<BudgetDetailsPage />} />,
+          <Route path="budgets/:id/edit" element={<UpdateBudgetPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/ai" element={<AIAssistantPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

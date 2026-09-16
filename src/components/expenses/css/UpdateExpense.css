@@ -1,8 +1,8 @@
 /* =========================
-   UPDATE BUDGET PAGE
+   UPDATE EXPENSE PAGE
 ========================= */
 
-.update-budget-page {
+.update-expense-page {
   min-height: 100vh;
   padding: 32px;
   background: #f1f5f9;
@@ -11,30 +11,21 @@
 
 
 /* =========================
-   UPDATE BUDGET CARD
+   UPDATE EXPENSE CARD
 ========================= */
 
-.update-budget-card {
+.update-expense-card {
   width: 100%;
-  max-width: 520px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 24px 26px;
+  padding: 24px 30px;
+  box-sizing: border-box;
 
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 14px;
+  border-radius: 16px;
 
   box-shadow: 0 6px 20px rgba(15, 23, 42, 0.07);
-  box-sizing: border-box;
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.update-budget-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 9px 24px rgba(15, 23, 42, 0.1);
 }
 
 
@@ -42,23 +33,21 @@
    HEADER
 ========================= */
 
-.update-budget-header {
+.update-expense-header {
   margin-bottom: 20px;
 }
 
-.update-budget-header h2 {
+.update-expense-header h2 {
   margin: 0 0 6px;
-
-  font-size: 23px;
-  font-weight: 700;
   color: #0f172a;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.update-budget-header p {
+.update-expense-header p {
   margin: 0;
-
-  font-size: 13px;
   color: #64748b;
+  font-size: 13px;
   line-height: 1.4;
 }
 
@@ -67,7 +56,7 @@
    FORM
 ========================= */
 
-.update-budget-form {
+.update-expense-form {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -78,30 +67,33 @@
    FORM FIELD
 ========================= */
 
-.update-budget-field {
+.update-expense-field {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.update-budget-field label {
+.update-expense-field label {
+  color: #334155;
   font-size: 13px;
   font-weight: 600;
-  color: #334155;
 }
 
 
 /* =========================
-   INPUT / SELECT
+   INPUT / SELECT / TEXTAREA
 ========================= */
 
-.update-budget-field input,
-.update-budget-field select {
+.update-expense-field input,
+.update-expense-field select,
+.update-expense-field textarea {
   width: 100%;
   padding: 9px 12px;
 
+  box-sizing: border-box;
+
   border: 1px solid #dbe2ea;
-  border-radius: 8px;
+  border-radius: 9px;
 
   background: #ffffff;
   color: #0f172a;
@@ -109,11 +101,14 @@
   font-size: 13px;
   outline: none;
 
-  box-sizing: border-box;
-
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
+}
+
+.update-expense-field input::placeholder,
+.update-expense-field textarea::placeholder {
+  color: #94a3b8;
 }
 
 
@@ -121,10 +116,32 @@
    INPUT FOCUS
 ========================= */
 
-.update-budget-field input:focus,
-.update-budget-field select:focus {
+.update-expense-field input:focus,
+.update-expense-field select:focus,
+.update-expense-field textarea:focus {
   border-color: #6366f1;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+
+/* =========================
+   TEXTAREA
+========================= */
+
+.update-expense-field textarea {
+  min-height: 75px;
+  height: 75px;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+
+/* =========================
+   SELECT
+========================= */
+
+.update-expense-field select {
+  cursor: pointer;
 }
 
 
@@ -132,19 +149,17 @@
    UPDATE BUTTON
 ========================= */
 
-.update-budget-form button {
+.update-expense-button {
   width: 100%;
   margin-top: 4px;
-
-  padding: 10px 16px;
+  padding: 10px 18px;
 
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
 
   background: linear-gradient(135deg, #6366f1, #7c3aed);
 
   color: #ffffff;
-
   font-size: 14px;
   font-weight: 600;
 
@@ -154,11 +169,11 @@
 
   transition:
     transform 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
-.update-budget-form button:hover {
+.update-expense-button:hover {
   background: linear-gradient(135deg, #4f46e5, #6d28d9);
 
   transform: translateY(-2px);
@@ -166,11 +181,11 @@
   box-shadow: 0 7px 18px rgba(99, 102, 241, 0.35);
 }
 
-.update-budget-form button:active {
+.update-expense-button:active {
   transform: translateY(0);
 }
 
-.update-budget-form button:disabled {
+.update-expense-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
@@ -179,37 +194,60 @@
 
 
 /* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .update-expense-page {
+    padding: 24px 20px;
+  }
+
+  .update-expense-card {
+    padding: 22px 24px;
+  }
+
+  .update-expense-header h2 {
+    font-size: 22px;
+  }
+}
+
+
+/* =========================
    MOBILE
 ========================= */
 
-@media (max-width: 600px) {
-  .update-budget-page {
-    padding: 24px 15px;
+@media (max-width: 520px) {
+
+  .update-expense-page {
+    padding: 18px 15px;
   }
 
-  .update-budget-card {
-    padding: 22px 20px;
-    border-radius: 12px;
+  .update-expense-card {
+    padding: 20px 18px;
+    border-radius: 14px;
   }
 
-  .update-budget-header {
+  .update-expense-header {
     margin-bottom: 18px;
   }
 
-  .update-budget-header h2 {
+  .update-expense-header h2 {
     font-size: 21px;
   }
 
-  .update-budget-form {
+  .update-expense-form {
     gap: 10px;
   }
 
-  .update-budget-field {
-    gap: 4px;
+  .update-expense-field input,
+  .update-expense-field select,
+  .update-expense-field textarea {
+    padding: 8px 10px;
   }
 
-  .update-budget-field input,
-  .update-budget-field select {
-    padding: 8px 10px;
+  .update-expense-field textarea {
+    min-height: 65px;
+    height: 65px;
   }
 }

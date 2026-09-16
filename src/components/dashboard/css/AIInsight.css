@@ -1,54 +1,92 @@
+/* =========================
+   AI INSIGHT
+========================= */
+
 .ai-insight {
-  width: 360px;
-  padding: 18px 20px;
   background: #ffffff;
-  border: 1px solid #e8eaf0;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
-  box-sizing: border-box;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 18px 20px;
+  min-width: 360px;
+  max-width: 480px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
 }
+
+
+/* =========================
+   HEADER
+========================= */
 
 .ai-insight-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .ai-insight-icon {
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  border-radius: 10px;
-  background: #eef2ff;
+
+  border-radius: 11px;
+
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #ffffff;
+
+  box-shadow: 0 5px 14px rgba(99, 102, 241, 0.35);
+}
+
+.ai-insight-icon svg {
+  stroke-width: 2.5;
 }
 
 .ai-insight-title {
   margin: 0;
-  font-size: 14px;
+  color: #0f172a;
+  font-size: 17px;
   font-weight: 700;
-  color: #111827;
 }
 
+
+/* =========================
+   CONTENT
+========================= */
+
 .ai-insight-content {
-  width: 100%;
+  margin-top: 4px;
+}
+
+.ai-insight-text {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.ai-insight-empty {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.ai-insight-content {
   overflow: hidden;
-  white-space: nowrap;
+  width: 100%;
 }
 
 .ai-insight-text {
   display: inline-block;
   margin: 0;
+  color: #64748b;
   font-size: 13px;
-  line-height: 1.5;
-  color: #6b7280;
-  animation: ai-insight-move 8s linear infinite;
+  line-height: 1.6;
+  white-space: nowrap;
+  animation: aiInsightRunning 12s linear infinite;
 }
-
-@keyframes ai-insight-move {
+@keyframes aiInsightRunning {
   from {
     transform: translateX(100%);
   }
@@ -58,14 +96,14 @@
   }
 }
 
-.ai-insight-empty {
-  margin: 0;
-  font-size: 13px;
-  color: #9ca3af;
-}
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media (max-width: 768px) {
   .ai-insight {
     width: 100%;
+    min-width: 0;
+    max-width: none;
   }
 }

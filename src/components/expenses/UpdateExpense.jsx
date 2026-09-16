@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import useExpense from "../../hooks/expense/useExpense";
 import { validationCreateExpense } from "../../utils/validation/expenseValidation";
-// import "./css/UpdateExpense.css";
+import "./css/UpdateExpense.css";
 
 const UpdateExpense = () => {
   const { id } = useParams();

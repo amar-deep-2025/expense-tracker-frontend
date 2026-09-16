@@ -1,126 +1,237 @@
+/* =========================
+   BUDGET LIST PAGE
+========================= */
+
 .budget-list {
   width: 100%;
   max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
+  margin: 0 auto;
+  padding: 32px;
   box-sizing: border-box;
 
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
+
+  background: #f1f5f9;
 }
+
+
+/* =========================
+   HEADER
+========================= */
 
 .budget-list h2 {
   grid-column: 1 / -1;
-  margin: 0 0 20px;
+
+  margin: 0 0 4px;
+
+  color: #0f172a;
   font-size: 24px;
-  font-weight: 600;
-  color: #1f2937;
+  font-weight: 700;
 }
 
+
+/* =========================
+   BUDGET CARD
+========================= */
+
 .budget-card {
-  padding: 18px;
+  padding: 20px;
+
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .budget-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+
+  border-color: #c7d2fe;
+
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
 }
 
+
+/* =========================
+   BUDGET CARD TITLE
+========================= */
+
 .budget-card h3 {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
+
+  color: #0f172a;
   font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
 }
+
+
+/* =========================
+   BUDGET CARD TEXT
+========================= */
 
 .budget-card p {
   margin: 7px 0;
+
+  color: #64748b;
   font-size: 14px;
-  color: #4b5563;
-  line-height: 1.4;
+  line-height: 1.5;
 }
+
+
+/* =========================
+   BUDGET AMOUNT
+========================= */
 
 .budget-card .budget-amount {
-  font-size: 16px;
-  font-weight: 600;
-  color: #111827;
+  font-size: 17px;
+  font-weight: 700;
+  color: #4f46e5;
 }
 
-/* View Details */
+
+/* =========================
+   VIEW DETAILS BUTTON
+========================= */
 
 .budget-details-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   margin-top: 12px;
-  padding: 9px 14px;
-  border-radius: 6px;
-  background: #1f2937;
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(135deg, #6366f1, #7c3aed);
+
   color: #ffffff;
   text-decoration: none;
-  font-size: 13px;
+
+  font-size: 14px;
   font-weight: 600;
+
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+
   transition:
     transform 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .budget-details-link:hover {
-  background: #111827;
+  background: linear-gradient(135deg, #4f46e5, #6d28d9);
+
+  color: #ffffff;
+  text-decoration: none;
+
   transform: translateY(-2px);
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+
+  box-shadow: 0 7px 18px rgba(99, 102, 241, 0.35);
 }
+
+
+/* =========================
+   EMPTY STATE
+========================= */
 
 .budget-list-empty {
   grid-column: 1 / -1;
-  padding: 30px;
+
+  padding: 40px 20px;
+
   text-align: center;
+
   background: #ffffff;
-  border-radius: 10px;
-  color: #6b7280;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+
+  color: #64748b;
+  font-size: 14px;
 }
 
-.budget-loading,
-.budget-error {
-  text-align: center;
+
+/* =========================
+   LOADING
+========================= */
+
+.budget-loading {
   margin-top: 40px;
+
+  text-align: center;
+
+  color: #6366f1;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.budget-error {
+  margin-top: 40px;
+
+  text-align: center;
+
+  color: #dc2626;
   font-size: 15px;
 }
 
-.budget-error {
-  color: #dc2626;
-}
 
-/* Responsive */
+/* =========================
+   RESPONSIVE
+========================= */
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
   .budget-list {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 700px) {
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 800px) {
   .budget-list {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 0 15px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 24px;
   }
 }
 
-@media (max-width: 500px) {
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 520px) {
   .budget-list {
     grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .budget-list h2 {
+    font-size: 21px;
+  }
+
+  .budget-card {
+    padding: 18px;
   }
 
   .budget-details-link {
     width: 100%;
     box-sizing: border-box;
-    text-align: center;
   }
 }
