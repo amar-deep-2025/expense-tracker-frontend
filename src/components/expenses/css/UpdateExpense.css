@@ -1,113 +1,172 @@
+/* =========================
+   UPDATE EXPENSE PAGE
+========================= */
+
 .update-expense-page {
   min-height: 100vh;
-  padding: 40px 20px;
-  background: #f5f7fa;
+  padding: 32px;
+  background: #f1f5f9;
   box-sizing: border-box;
 }
 
+/* =========================
+   UPDATE EXPENSE CARD
+========================= */
+
 .update-expense-card {
   width: 100%;
-  max-width: 480px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 28px 30px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 24px 30px;
   box-sizing: border-box;
-
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.07);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
 }
 
 .update-expense-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
 }
 
+/* =========================
+   HEADER
+========================= */
+
 .update-expense-header {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .update-expense-header h2 {
   margin: 0 0 6px;
-  font-size: 22px;
-  font-weight: 600;
-  color: #1f2937;
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 .update-expense-header p {
   margin: 0;
-  font-size: 14px;
-  color: #6b7280;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.4;
 }
+
+/* =========================
+   FORM
+========================= */
 
 .update-expense-form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
+
+/* =========================
+   FORM FIELD
+========================= */
 
 .update-expense-field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 
 .update-expense-field label {
+  color: #334155;
   font-size: 13px;
   font-weight: 600;
-  color: #374151;
 }
+
+/* =========================
+   INPUT / SELECT / TEXTAREA
+========================= */
 
 .update-expense-field input,
-.update-expense-field textarea,
-.update-expense-field select {
+.update-expense-field select,
+.update-expense-field textarea {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: #ffffff;
-  color: #1f2937;
-  font-size: 14px;
-  outline: none;
+  padding: 9px 12px;
   box-sizing: border-box;
+  border: 1px solid #dbe2ea;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 13px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.update-expense-field input:focus,
-.update-expense-field textarea:focus,
-.update-expense-field select:focus {
-  border-color: #4b5563;
+.update-expense-field input::placeholder,
+.update-expense-field textarea::placeholder {
+  color: #94a3b8;
 }
+
+/* =========================
+   INPUT FOCUS
+========================= */
+
+.update-expense-field input:focus,
+.update-expense-field select:focus,
+.update-expense-field textarea:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+/* =========================
+   TEXTAREA
+========================= */
 
 .update-expense-field textarea {
   min-height: 75px;
+  height: 75px;
   resize: vertical;
+  line-height: 1.4;
 }
+
+/* =========================
+   SELECT
+========================= */
+
+.update-expense-field select {
+  cursor: pointer;
+}
+
+/* =========================
+   UPDATE BUTTON
+========================= */
 
 .update-expense-button {
   width: 100%;
-  margin-top: 6px;
-  padding: 11px 16px;
+  margin-top: 4px;
+  padding: 10px 18px;
   border: none;
-  border-radius: 6px;
-  background: #1f2937;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #7c3aed);
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
   transition:
     transform 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .update-expense-button:hover {
-  background: #111827;
+  background: linear-gradient(135deg, #4f46e5, #6d28d9);
   transform: translateY(-2px);
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 7px 18px rgba(99, 102, 241, 0.35);
+}
+
+.update-expense-button:active {
+  transform: translateY(0);
 }
 
 .update-expense-button:disabled {
@@ -116,16 +175,59 @@
   transform: none;
 }
 
-@media (max-width: 600px) {
-  .update-expense-page {
-    padding: 25px 15px;
-  }
+/* =========================
+   RESPONSIVE
+========================= */
 
-  .update-expense-card {
+@media (max-width: 768px) {
+  .update-expense-page {
     padding: 24px 20px;
   }
 
+  .update-expense-card {
+    padding: 22px 24px;
+  }
+
   .update-expense-header h2 {
-    font-size: 20px;
+    font-size: 22px;
   }
 }
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 520px) {
+  .update-expense-page {
+    padding: 18px 15px;
+  }
+
+  .update-expense-card {
+    padding: 20px 18px;
+    border-radius: 14px;
+  }
+
+  .update-expense-header {
+    margin-bottom: 18px;
+  }
+
+  .update-expense-header h2 {
+    font-size: 21px;
+  }
+
+  .update-expense-form {
+    gap: 10px;
+  }
+
+  .update-expense-field input,
+  .update-expense-field select,
+  .update-expense-field textarea {
+    padding: 8px 10px;
+  }
+
+  .update-expense-field textarea {
+    min-height: 65px;
+    height: 65px;
+  }
+}
+

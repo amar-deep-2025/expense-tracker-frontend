@@ -412,85 +412,95 @@ const Profile = () => {
           {/* Profile Information */}
 
           {isEditing ? (
-            <form onSubmit={handleUpdate} className="profile-edit-form">
-              <div className="profile-field">
-                <label htmlFor="name">Name</label>
+            <div className="edit-profile-section">
+              <form onSubmit={handleUpdate} className="profile-edit-form">
+                <h3>Edit Profile</h3>
 
-                <input
-                  id="name"
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Enter your name"
-                />
-              </div>
+                <div className="profile-field">
+                  <label htmlFor="name">Name</label>
 
-              <div className="profile-field">
-                <label htmlFor="phone">Phone</label>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Enter your name"
+                  />
+                </div>
 
-                <input
-                  id="phone"
-                  type="text"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="Enter your phone"
-                />
-              </div>
+                <div className="profile-field">
+                  <label htmlFor="phone">Phone</label>
 
-              <div className="profile-edit-actions">
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="save-profile-button"
-                >
-                  {loading ? "Updating..." : "Save Changes"}
-                </button>
+                  <input
+                    id="phone"
+                    type="text"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="Enter your phone"
+                  />
+                </div>
 
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  className="cancel-profile-button"
-                  disabled={loading}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
+                <div className="profile-edit-actions">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="save-profile-button"
+                  >
+                    {loading ? "Updating..." : "Save Changes"}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleCancel}
+                    className="cancel-profile-button"
+                    disabled={loading}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
           ) : (
             <>
-              <p>
-                <strong>Name:</strong> {user.name}
-              </p>
+              <div className="profile-information">
+                <p>
+                  <strong>Name:</strong> {user.name}
+                </p>
 
-              <p>
-                <strong>Email:</strong> {user.email}
-              </p>
+                <p>
+                  <strong>Email:</strong> {user.email}
+                </p>
 
-              <p>
-                <strong>Phone:</strong> {user.phone}
-              </p>
+                <p>
+                  <strong>Phone:</strong> {user.phone}
+                </p>
 
-              <p>
-                <strong>Role:</strong> {user.role}
-              </p>
+                <p>
+                  <strong>Role:</strong> {user.role}
+                </p>
 
-              <p>
-                <strong>Created At:</strong> {formatDateTime(user.createdAt)}
-              </p>
+                <p>
+                  <strong>Created At:</strong> {formatDateTime(user.createdAt)}
+                </p>
 
-              <p>
-                <strong>Updated At:</strong> {formatDateTime(user.updatedAt)}
-              </p>
+                <p>
+                  <strong>Updated At:</strong> {formatDateTime(user.updatedAt)}
+                </p>
+              </div>
 
-              <button
-                type="button"
-                onClick={handleEdit}
-                className="edit-profile-button"
-              >
-                Edit Profile
-              </button>
+              {/* Edit Profile */}
+
+              <div className="edit-profile-section">
+                <button
+                  type="button"
+                  onClick={handleEdit}
+                  className="edit-profile-button"
+                >
+                  Edit Profile
+                </button>
+              </div>
             </>
           )}
 

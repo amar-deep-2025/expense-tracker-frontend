@@ -126,7 +126,7 @@ const CreateExpense = () => {
         </div>
 
         <button
-          className="create-expense-button"
+          className="create-expense-submit-button"
           type="submit"
           disabled={loading}
         >

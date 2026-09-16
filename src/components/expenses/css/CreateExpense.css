@@ -1,77 +1,241 @@
+/* =========================
+   CREATE EXPENSE
+========================= */
+
 .create-expense {
+  width: 100%;
   max-width: 600px;
-  margin: 40px auto;
-  padding: 30px;
+  margin: 30px auto;
+  padding: 24px;
+  box-sizing: border-box;
+
   background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.08);
 }
 
+
+/* =========================
+   HEADER
+========================= */
+
 .create-expense h2 {
-  margin-bottom: 8px;
-  font-size: 24px;
+  margin: 0 0 5px;
+  color: #0f172a;
+  font-size: 23px;
+  font-weight: 700;
 }
 
 .create-expense p {
-  margin-bottom: 25px;
-  color: #666;
+  margin: 0 0 18px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.4;
 }
+
+
+/* =========================
+   FORM
+========================= */
 
 .create-expense form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
 }
+
+
+/* =========================
+   FORM FIELD
+========================= */
+
+.expense-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.expense-field label {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   INPUT / TEXTAREA / SELECT
+========================= */
 
 .create-expense input,
 .create-expense textarea,
 .create-expense select {
   width: 100%;
-  padding: 12px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 14px;
-  outline: none;
+  padding: 9px 12px;
+
   box-sizing: border-box;
+
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+
+  background: #ffffff;
+  color: #0f172a;
+
+  font-size: 13px;
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
+
+
+/* =========================
+   PLACEHOLDER
+========================= */
+
+.create-expense input::placeholder,
+.create-expense textarea::placeholder {
+  color: #94a3b8;
+}
+
+
+/* =========================
+   INPUT FOCUS
+========================= */
 
 .create-expense input:focus,
 .create-expense textarea:focus,
 .create-expense select:focus {
-  border-color: #333;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }
+
+
+/* =========================
+   TEXTAREA
+========================= */
 
 .create-expense textarea {
-  min-height: 100px;
+  min-height: 70px;
+  height: 70px;
   resize: vertical;
+  line-height: 1.4;
 }
 
-.expense-field {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 
-.expense-field label {
-  font-size: 14px;
-  font-weight: 600;
-}
+/* =========================
+   SELECT
+========================= */
 
-.create-expense-button {
-  padding: 12px 18px;
-  border: none;
-  border-radius: 6px;
-  background: #333;
-  color: white;
-  font-size: 15px;
+.create-expense select {
   cursor: pointer;
 }
 
-.create-expense-button:hover {
-  background: #222;
+
+/* =========================
+   CREATE BUTTON
+========================= */
+
+.create-expense-submit-button {
+  width: 100%;
+  margin-top: 4px;
+
+  padding: 10px 18px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: linear-gradient(135deg, #6366f1, #7c3aed);
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
-.create-expense-button:disabled {
+.create-expense-submit-button:hover {
+  background: linear-gradient(135deg, #4f46e5, #6d28d9);
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(99, 102, 241, 0.35);
+}
+
+.create-expense-submit-button:active {
+  transform: translateY(0);
+}
+
+.create-expense-submit-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .create-expense {
+    margin: 24px auto;
+    padding: 22px;
+  }
+
+  .create-expense h2 {
+    font-size: 22px;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 520px) {
+  .create-expense {
+    margin: 18px auto;
+    padding: 20px 18px;
+    border-radius: 10px;
+  }
+
+  .create-expense h2 {
+    font-size: 21px;
+  }
+
+  .create-expense p {
+    margin-bottom: 16px;
+  }
+
+  .create-expense form {
+    gap: 10px;
+  }
+
+  .expense-field {
+    gap: 4px;
+  }
+
+  .create-expense input,
+  .create-expense textarea,
+  .create-expense select {
+    padding: 8px 10px;
+  }
+
+  .create-expense textarea {
+    min-height: 65px;
+    height: 65px;
+  }
+
+  .create-expense-submit-button {
+    padding: 9px 16px;
+  }
 }
