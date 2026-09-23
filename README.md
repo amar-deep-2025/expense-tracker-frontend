@@ -1,16 +1,138 @@
-# React + Vite
+# AI-Powered Smart Expense Tracker - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based frontend for an AI-powered expense tracking and budget management application. The application provides secure authentication, expense and budget management, financial dashboards, AI-powered insights, user profile management, and report download functionality.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Project Overview
 
-## React Compiler
+This project is the frontend application of an AI-powered Smart Expense Tracker and Budget Management System.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The frontend is built using React and Vite and communicates with the backend through REST APIs using Axios.
 
-## Expanding the ESLint configuration
+The application is organized into reusable components, pages, custom hooks, services, validation utilities, and feature-specific modules.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ✨ Key Features
+
+### Authentication
+
+- User registration
+- Login
+- OTP verification
+- Forgot password
+- Reset password
+- Logout
+- Authentication state management
+- Client-side form validation
+- Toast notifications for success and error feedback
+
+### Expense Management
+
+- Create expense
+- View expense list
+- View expense details
+- Update expense
+- Expense validation
+- Category-based expense handling
+
+### Budget Management
+
+- Create budget
+- View budgets
+- View budget details
+- Update budget
+- Budget-related API integration
+
+### Dashboard
+
+The dashboard provides financial summaries and visual information such as:
+
+- Monthly summary
+- Category summary
+- Monthly comparison
+- Recent expenses
+- Top spending category
+- Financial summary cards
+- AI-generated insights
+
+### AI Assistant
+
+The application includes an AI Assistant interface for interacting with AI-powered financial insights.
+
+Frontend components include:
+
+- AI Assistant
+- AI Assistant page
+- AI service integration
+- Dashboard AI insights
+
+### Reports
+
+The frontend provides report-related functionality through the report service and download hooks.
+
+### User Profile
+
+- User profile page
+- User information management
+- Profile-related API integration
+
+---
+
+## 🛠️ Technology Stack
+
+### Frontend
+
+- React 19
+- Vite
+- JavaScript (ES6+)
+- HTML5
+- CSS3
+
+### Libraries
+
+- Axios
+- React Router
+- React Toastify
+- Lucide React
+- React Icons
+
+### Development Tools
+
+- Vite
+- ESLint
+- Git
+- GitHub
+- VS Code
+
+---
+
+## 🏗️ Application Architecture
+
+The frontend follows a modular and feature-oriented structure.
+
+```text
+Client
+   │
+   ▼
+React Application
+   │
+   ├── Pages
+   │
+   ├── Components
+   │
+   ├── Custom Hooks
+   │
+   ├── Services
+   │
+   ├── Validation
+   │
+   └── Utilities
+   │
+   ▼
+REST APIs
+   │
+   ▼
+Spring Boot Backend
+```
